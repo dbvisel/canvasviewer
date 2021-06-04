@@ -7,7 +7,7 @@ const canvases = walkData.default.walks;
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
   canvases.forEach((thisCanvas) => {
-    console.log(thisCanvas.id);
+    console.log(`Building canvas: ${thisCanvas.id}`);
     createPage({
       path: "/" + thisCanvas.id,
       component: canvasTemplate,

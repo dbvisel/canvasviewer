@@ -10,13 +10,7 @@ import Config from "./../../config";
 // Go to walk mode, click a maximize button
 // you're in presentation mode, but it still says walk mode
 
-const Header = ({
-  currentWalk,
-  setSelectedStop,
-  mode,
-  setMode,
-  setAnnotationShown,
-}) => {
+const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
   const [flag, setFlag] = React.useState(false);
   const myUrl = `${Config.disqus.url}/${currentWalk.id}`;
   return (
