@@ -1,7 +1,17 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
+require = require("esm")(module);
+const path = require("path");
+const canvasTemplate = path.resolve(`src/templates/canvasPage.js`);
+const walkData = require("./src/assets/walkData");
+const canvases = walkData.default.walks;
 
-// You can delete this file if you're not using it
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions;
+  canvases.forEach((thisCanvas) => {
+    console.log(thisCanvas.id);
+    createPage({
+      path: "/" + thisCanvas.id,
+      component: canvasTemplate,
+      context: { id: thisCanvas.id, myData: thisCanvas },
+    });
+  });
+};
