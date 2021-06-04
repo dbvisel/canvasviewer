@@ -2,15 +2,11 @@
 
 Demo done in React to demonstrate how a JSON data format could be used to present "walks" of embedded items/sections of items from the Internet Archive, interleaved, if desired, with comments. This is done in React because that was an easy way to get a demo off the ground; it could be made in anything.
 
-This uses the JSON data stored in `/src/assets/walkData.js` to build a walk (or walks) based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://collagewalk.netlify.app.
+This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://collagewalk.netlify.app.
 
 To run this locally, _npm install_, then _npm start_. Build with _npm run build_.
 
 Still images are generated with a build step: _npm run make-images_, which screenshots all the images and puts them in _/public/images_.
-
-## Rework
-
-- hide annotation until selected
 
 ## Issues
 
@@ -18,7 +14,8 @@ Still images are generated with a build step: _npm run make-images_, which scree
  - Throbbers aren't wonderful.
  - Dragging isn't wonderful & I suspect there's something buggy in my implementation of it.
  - Performance isn't wonderful because it's a bunch of iframes! 
- - if you maximize/go to present mode, header select doesn't notice.
+ - Should show all annotations connected when something along a spine is selected
+ - Should show previous annotation connection in SelectedStop
 
 ## Demo needs
 

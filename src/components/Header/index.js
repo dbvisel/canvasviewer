@@ -5,11 +5,6 @@ import { BiCommentAdd } from "react-icons/bi";
 import { HeaderDiv } from "./elements";
 import Config from "./../../config";
 
-//TODO: these selects aren't properly responding!
-//
-// Go to walk mode, click a maximize button
-// you're in presentation mode, but it still says walk mode
-
 const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
   const [flag, setFlag] = React.useState(false);
   const myUrl = `${Config.disqus.url}/${currentWalk.id}`;
@@ -48,6 +43,7 @@ const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
         <select
           selected={mode}
           key={mode}
+          defaultValue={mode}
           onChange={(e) => {
             e.preventDefault();
             setMode(e.target.value);

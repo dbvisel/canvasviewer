@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import walkData from "./../assets/walkData";
+import canvasData from "./../assets/canvasData";
 
 const Index = () => {
-  const walks = walkData.walks;
+  const walks = canvasData.canvases;
   return (
-    <div>
+    <div style={{ margin: "25px" }}>
       <h1>Canvas viewer demo</h1>
       <p>Choose a canvas to view:</p>
       <ul>
@@ -13,8 +13,8 @@ const Index = () => {
           <li key={index}>
             <strong>
               <Link to={`/${walk.id}`}>{walk.title}</Link>
-            </strong>
-            , {walk.author}, {walk.date}
+            </strong>{" "}
+            (by {walk.author}, {walk.date})
           </li>
         ))}
       </ul>

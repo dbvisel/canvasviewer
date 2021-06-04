@@ -1,6 +1,5 @@
 import React from "react";
 import { useDrop } from "react-dnd";
-// import walkData from "../../assets/walkData";
 import Stop from "./../Stop";
 import Config from "./../../config";
 import { ThickLine } from "./elements";

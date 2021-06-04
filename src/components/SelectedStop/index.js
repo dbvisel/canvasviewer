@@ -49,10 +49,9 @@ const SelectedStop = ({
 
   const previousSideTrips = getPreviousSideTrips(stop.id);
 
-  return (
-    <SelectedStopDiv className={isBottom ? "horizontal" : ""}>
-      {!isBottom ? <h2>Selected stop:</h2> : null}
-      {isBottom && previousStop ? (
+  return isBottom ? (
+    <SelectedStopDiv className="horizontal">
+      {previousStop ? (
         <button
           onClick={() => {
             setSelectedStop(previousStop);
@@ -62,14 +61,15 @@ const SelectedStop = ({
           {getTitleFromId(previousStop)}
         </button>
       ) : null}
-      <div>
+      <div className="middle">
         <p>
-          <strong className="verticalonly">Name: </strong>{" "}
-          {stop.title || `Stop ${currentWalk.stops.indexOf(stop) + 1}`}
+          <strong>
+            {stop.title || `Stop ${currentWalk.stops.indexOf(stop) + 1}`}
+          </strong>{" "}
+          {stop.text || ""}
         </p>
         {stop.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
           <div className="sidetrips">
-            <hr />
             <h4>Side trips:</h4>
             {previousSideTrips && usePreviousSideTrips
               ? previousSideTrips.map((previousSideTrip, index) => (
@@ -99,53 +99,96 @@ const SelectedStop = ({
               : null}
           </div>
         ) : null}
-
-        {stop.text ? <p className="verticalonly">{stop.text}</p> : null}
       </div>
-      {/*<p>{JSON.stringify(stop)}</p>*/}
-      {!isBottom && previousStop ? (
-        <div>
-          <hr className="verticalonly" />
-          <h4 className="verticalonly">Previous:</h4>
-          <button
-            onClick={() => {
-              setSelectedStop(previousStop);
-            }}
-          >
-            <span>←</span>
-            {getTitleFromId(previousStop)}
-          </button>
-        </div>
-      ) : null}
       {stop.nextStop ? (
+        <button
+          onClick={() => {
+            setSelectedStop(stop.nextStop);
+          }}
+        >
+          {getTitleFromId(stop.nextStop)}
+          <span>→</span>
+        </button>
+      ) : null}
+    </SelectedStopDiv>
+  ) : (
+    <SelectedStopDiv className="vertical">
+      <div>
+        <p>
+          <strong>
+            {stop.title || `Stop ${currentWalk.stops.indexOf(stop) + 1}`}
+          </strong>
+        </p>
+        {stop.text ? <p>{stop.text}</p> : null}
+      </div>
+      {previousStop || stop.nextStop ? (
         <div>
-          <hr className="verticalonly" />
-          <h4 className="verticalonly">Next:</h4>
-          <button
-            onClick={() => {
-              setSelectedStop(stop.nextStop);
-            }}
-          >
-            {getTitleFromId(stop.nextStop)}
-            <span>→</span>
-          </button>
+          <hr />
+          <h4>On this path:</h4>
+          {previousStop ? (
+            <button
+              onClick={() => {
+                setSelectedStop(previousStop);
+              }}
+            >
+              <span>←</span>
+              {getTitleFromId(previousStop)}
+            </button>
+          ) : null}
+          {stop.nextStop ? (
+            <button
+              onClick={() => {
+                setSelectedStop(stop.nextStop);
+              }}
+            >
+              {getTitleFromId(stop.nextStop)}
+              <span>→</span>
+            </button>
+          ) : null}
         </div>
       ) : null}
-      {!isBottom ? (
-        <React.Fragment>
-          <div>
-            <hr />
-          </div>
-          <button
-            onClick={() => {
-              setPresentationMode(true);
-            }}
-          >
-            Presentation mode
-          </button>
+      {stop.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
+        <div className="sidetrips">
           <hr />
-        </React.Fragment>
+          <h4>Side trips:</h4>
+          {previousSideTrips && usePreviousSideTrips
+            ? previousSideTrips.map((previousSideTrip, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setSelectedStop(previousSideTrip);
+                  }}
+                >
+                  <span>↖</span>
+                  {getTitleFromId(previousSideTrip)}
+                </button>
+              ))
+            : null}
+          {stop.sideTrips
+            ? stop.sideTrips.map((sideTrip, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setSelectedStop(sideTrip);
+                  }}
+                >
+                  <span>↘</span>
+                  {getTitleFromId(sideTrip)}
+                </button>
+              ))
+            : null}
+        </div>
       ) : null}
+      <div>
+        <hr />
+        <button
+          onClick={() => {
+            setPresentationMode(true);
+          }}
+        >
+          Presentation mode
+        </button>
+      </div>
     </SelectedStopDiv>
   );
 };
