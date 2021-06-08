@@ -3,106 +3,112 @@ import VideoEmbed from "./../VideoEmbed";
 import AudioEmbed from "./../AudioEmbed";
 import BookEmbed from "./../BookEmbed";
 import ImageEmbed from "./../ImageEmbed";
-import CommentStop from "./../CommentStop";
-import SelectedStop from "./../SelectedStop";
+import CommentPoint from "./../CommentPoint";
+import SelectedPoint from "./../SelectedPoint";
 import SoftwareEmbed from "./../SoftwareEmbed";
 import WebEmbed from "./../WebEmbed";
-import { PresentationModeDiv, PresentationStopWrapper } from "./elements";
+import { PresentationModeDiv, PresentationPointWrapper } from "./elements";
 
-const PresentationStop = ({ stopData, walkId }) => {
-  const myCommentId = walkId + "-" + stopData.id;
+const PresentationPoint = ({ pointData, canvasId }) => {
+  const myCommentId = canvasId + "-" + pointData.id;
 
   return (
-    <PresentationStopWrapper>
-      {stopData.type && stopData.type === "video" ? (
+    <PresentationPointWrapper>
+      {pointData.type && pointData.type === "video" ? (
         <VideoEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "audio" ? (
+      ) : pointData.type && pointData.type === "audio" ? (
         <AudioEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "book" ? (
+      ) : pointData.type && pointData.type === "book" ? (
         <BookEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "image" ? (
+      ) : pointData.type && pointData.type === "image" ? (
         <ImageEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "web" ? (
+      ) : pointData.type && pointData.type === "web" ? (
         <WebEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "software" ? (
+      ) : pointData.type && pointData.type === "software" ? (
         <SoftwareEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
           presentationMode
         />
-      ) : stopData.type && stopData.type === "comment" ? (
-        <CommentStop
-          text={stopData.text}
+      ) : pointData.type && pointData.type === "comment" ? (
+        <CommentPoint
+          text={pointData.text}
           id={myCommentId}
           presentationMode
-          width={stopData.width}
-          height={stopData.height}
-          isStartPoint={stopData.isStartPoint}
-          isStopPoint={stopData.isStopPoint}
+          width={pointData.width}
+          height={pointData.height}
+          isStartPoint={pointData.isStartPoint}
+          isStopPoint={pointData.isStopPoint}
         />
       ) : (
-        <div>{JSON.stringify(stopData)}</div>
+        <div>{JSON.stringify(pointData)}</div>
       )}
-    </PresentationStopWrapper>
+    </PresentationPointWrapper>
   );
 };
 
-const PresentationMode = ({ currentWalk, selectedStop, setSelectedStop }) => {
+const PresentationMode = ({
+  currentCanvas,
+  selectedPoint,
+  setSelectedPoint,
+}) => {
   React.useEffect(() => {
     // console.log("firing useeffect");
-    if (selectedStop === "") {
-      console.log("No stop selected!");
-      // console.log(currentWalk.stops[0].id);
-      setSelectedStop(currentWalk.stops[0].id);
+    if (selectedPoint === "") {
+      console.log("No point selected!");
+      // console.log(currentCanvas.points[0].id);
+      setSelectedPoint(currentCanvas.points[0].id);
     }
-  }, [selectedStop, setSelectedStop, currentWalk]);
-  // console.log(currentWalk.stops, selectedStop);
-  return selectedStop ? (
+  }, [selectedPoint, setSelectedPoint, currentCanvas]);
+  // console.log(currentCanvas.points, selectedPoint);
+  return selectedPoint ? (
     <PresentationModeDiv>
       <div>
-        <PresentationStop
-          walkId={currentWalk.id}
-          stopData={currentWalk.stops.filter((x) => x.id === selectedStop)[0]}
+        <PresentationPoint
+          canvasId={currentCanvas.id}
+          pointData={
+            currentCanvas.points.filter((x) => x.id === selectedPoint)[0]
+          }
         />
       </div>
       <nav>
-        <SelectedStop
+        <SelectedPoint
           isBottom
-          currentWalk={currentWalk}
-          stop={currentWalk.stops.filter((x) => x.id === selectedStop)[0]}
-          setSelectedStop={setSelectedStop}
+          currentCanvas={currentCanvas}
+          point={currentCanvas.points.filter((x) => x.id === selectedPoint)[0]}
+          setSelectedPoint={setSelectedPoint}
         />
       </nav>
     </PresentationModeDiv>

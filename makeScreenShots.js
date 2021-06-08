@@ -7,8 +7,8 @@ const urlsToGet = [];
 for (let i = 0; i < canvasData.canvases.length; i++) {
   const thisWalk = canvasData.canvases[i];
   const thisId = canvasData.canvases[i].id;
-  for (let j = 0; j < thisWalk.stops.length; j++) {
-    const thisStop = thisWalk.stops[j];
+  for (let j = 0; j < thisWalk.points.length; j++) {
+    const thisStop = thisWalk.points[j];
     if (thisStop.url) {
       const newStop = thisStop;
       newStop.filename = thisId + "-" + newStop.id;

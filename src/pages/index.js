@@ -3,18 +3,18 @@ import { Link } from "gatsby";
 import canvasData from "./../assets/canvasData";
 
 const Index = () => {
-  const walks = canvasData.canvases;
+  const canvases = canvasData.canvases;
   return (
     <div style={{ margin: "25px" }}>
       <h1>Canvas viewer demo</h1>
       <p>Choose a canvas to view:</p>
       <ul>
-        {walks.map((walk, index) => (
+        {canvases.map((canvas, index) => (
           <li key={index}>
             <strong>
-              <Link to={`/${walk.id}`}>{walk.title}</Link>
+              <Link to={`/${canvas.id}`}>{canvas.title}</Link>
             </strong>{" "}
-            (by {walk.author}, {walk.date})
+            (by {canvas.author}, {canvas.date})
           </li>
         ))}
       </ul>

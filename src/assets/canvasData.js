@@ -1,28 +1,29 @@
 /** This file could be JSON! I'm including it as a JS module simply so that I can include comments.
  *
- * A canvas consists of an array of stops and some basic metadata
+ * A canvas consists of an array of points and some basic metadata
  *
  * id:						string, a unique ID, required
- * title:					string, the title for the walk
- * stops:					an array of stops, required
+ * title:					string, the title for the canvas
+ * useAnnotation: boolean, whether there should be user annotation
+ * points:				an array of points, required
  *
- * Each stop consists of:
+ * Each point consists of:
  *
- * id: 						string, a unique ID for the stop within the walk, required
+ * id: 						string, a unique ID for the point within the canvas, required
  * type: 					enum ("video" | "audio" | "book" | "comment" | "image" | "web" | "software") –
- * 			 					This isn't required, but if it's not there (or not one of those), you'll just see JSON in the stop.
+ * 			 					This isn't required, but if it's not there (or not one of those), you'll just see JSON in the point.
  * 			 					"comment" is a special type in that it's not an iframe, it's just text.
- * title: 				string, a name for the stop (if desired)
- * isStartPoint:  boolean, true if this stop can be a starting point for a walk.
- * 							  This isn't required, and could be inferred from a stop having a "nextStop" value?
- * isStopPoint:		boolean, true is this stop can be a stopping point for a walk.
+ * title: 				string, a name for the point (if desired)
+ * isStartPoint:  boolean, true if this point can be a starting point for a path.
+ * 							  This isn't required, and could be inferred from a point having a "nextPoint" value?
+ * isStopPoint:		boolean, true is this point can be a stopping point for a path.
  * 								This isn't required and could probably be inferred (though maybe not that useful)
- * nextStop:			string, an ID of a next stop
- * 					 			This is for the main spine of the walk.
- * 								If a stop's ID is listed somewhere else as a nextStop and there's no nextStop value,
+ * nextPoint:			string, an ID of a next point
+ * 					 			This is for the main spine of the canvas.
+ * 								If a point's ID is listed somewhere else as a nextPoint and there's no nextPoint value,
  * 								it could be declaared to be an endPoint.
- * sideTrips:			an array of IDs of stops that this stop could connect to.
- * 								sideTrips are for annotations – things that are not the main spine of the walk.
+ * sideTrips:			an array of IDs of points that this point could connect to.
+ * 								sideTrips are for annotations – things that are not the main spine of the canvas.
  * url: 					string/URL, for type video, audio, book, image, web, or software, the embed link.
  * width:					number, width in pixels
  * height:				number, height in pixels
@@ -30,7 +31,7 @@
  * left:					number, distance in pixels from left
  * top:						number, distance in pixels from top
  * 								If left or top are not set, a value wll be created (this is not very smart right now)
- * text:					string, comment on a stop
+ * text:					string, comment on a point
  *
  * Web embed URLs aren't being broken down – so if you want a 1-up book, use this:
  *
@@ -44,7 +45,7 @@
  *
  * ## IDEAS
  *
- * Could a walk be a stop type? I.e. if you linked to another walk as a sideTrip?
+ * Could a canvas be a point type? I.e. if you linked to another canvas as a sideTrip?
  *
  * ## NOTES
  *
@@ -62,15 +63,16 @@ const canvasData = {
       title: "Alan Kay talk 1995",
       author: "Dan Visel",
       date: "10 May 2021",
-      stops: [
+      useAnnotation: false,
+      points: [
         {
           id: "intro",
           type: "comment",
           isStartPoint: true,
           title: "Introduction",
           text:
-            "This walk annotates a lecture given by Alan Kay from the 1995 Vannebar Bush symposium, presenting material refered to that's in the Internet Archive.",
-          nextStop: "kay1",
+            "This canvas annotates a lecture given by Alan Kay from the 1995 Vannebar Bush symposium, presenting material refered to that's in the Internet Archive.",
+          nextPoint: "kay1",
         },
         {
           id: "kay1",
@@ -82,7 +84,7 @@ const canvasData = {
           height: 240,
           left: xOffset[2],
           top: 10,
-          nextStop: "kay2",
+          nextPoint: "kay2",
           sideTrips: ["annotation1"],
         },
         {
@@ -108,7 +110,7 @@ const canvasData = {
           height: 240,
           left: xOffset[2],
           top: 10 + yOffset,
-          nextStop: "kay3",
+          nextPoint: "kay3",
           sideTrips: ["annotation2"],
         },
         {
@@ -147,7 +149,7 @@ const canvasData = {
           height: 240,
           left: xOffset[2],
           top: 10 + yOffset * 2,
-          nextStop: "kay4",
+          nextPoint: "kay4",
           sideTrips: ["annotation3"],
         },
         {
@@ -173,7 +175,7 @@ const canvasData = {
           height: 240,
           left: xOffset[2],
           top: 10 + yOffset * 3,
-          nextStop: "kay5",
+          nextPoint: "kay5",
           sideTrips: ["annotation4"],
         },
         {
@@ -241,43 +243,44 @@ const canvasData = {
       ],
     },
     {
-      id: "walk0",
-      title: "Sample Walk 1",
+      id: "annotationwalk",
+      title: "Canvas with annotation",
       author: "Dan Visel",
       date: "25 April 2021",
-      stops: [
+      useAnnotation: true,
+      points: [
         {
-          id: "stop1",
+          id: "point1",
           title: "The start point",
           type: "comment",
           text:
-            "This is the very first stop. It's just this text. Click on another stop, or the NEXT button to go on.",
+            "This is the very first point. It's just this text. Click on another point, or the NEXT button to go on.",
           isStartPoint: true,
-          nextStop: "stop2",
+          nextPoint: "point2",
         },
         {
-          id: "stop2",
+          id: "point2",
           title: "A video clip",
           type: "video",
           url: "https://archive.org/embed/ssfPPIE1915",
           text:
             "This is an embedded video clip. It can also have comment data in it, like this.",
-          nextStop: "stop3",
+          nextPoint: "point3",
           top: 60,
           left: 300,
         },
         {
-          id: "stop3",
+          id: "point3",
           type: "comment",
           text:
-            "A stop can be an embedded object (like the video) or it can just be a comment (like this one). We can also embed images and books.",
-          nextStop: "stop4",
+            "A point can be an embedded object (like the video) or it can just be a comment (like this one). We can also embed images and books.",
+          nextPoint: "point4",
           top: 300,
           left: 975,
         },
         {
-          id: "stop4",
-          nextStop: "stop5",
+          id: "point4",
+          nextPoint: "point5",
           type: "book",
           title: "A book viewer",
           url:
@@ -288,42 +291,42 @@ const canvasData = {
           top: 700,
         },
         {
-          id: "stop5",
+          id: "point5",
           type: "comment",
           text:
-            "One thing about these stops – you can drag them around if you don’t like where they are. And because the objects are big, you may have to scroll.",
-          nextStop: "stop6",
+            "One thing about these points – you can drag them around if you don’t like where they are. And because the objects are big, you may have to scroll.",
+          nextPoint: "point6",
           left: 1210,
           top: 500,
         },
         {
-          id: "stop6",
+          id: "point6",
           title: "An image embed",
           type: "image",
           url:
             "https://archive.org/embed/mma_nakht_and_family_fishing_and_fowling_tomb_of_nakht_548578",
-          nextStop: "stop7",
+          nextPoint: "point7",
           width: 200,
           height: 200,
           left: 610,
           top: 650,
         },
         {
-          id: "stop7",
+          id: "point7",
           title: "A Wayback Machine embed",
           type: "web",
           url:
             "https://web.archive.org/web/19961219003318/http://voyagerco.com/projects/",
           text: "Need to figure out a better URL scheme for this!",
-          nextStop: "stop8",
+          nextPoint: "point8",
           width: 600,
           left: 810,
           top: 800,
         },
         {
-          id: "stop8",
+          id: "point8",
           type: "comment",
-          text: "This is the last stop!",
+          text: "This is the last point!",
           isStopPoint: true,
           left: 1300,
           top: 900,
@@ -335,115 +338,116 @@ const canvasData = {
       title: "Loop demo",
       author: "Dan Visel",
       date: "25 April 2021",
-      stops: [
+      useAnnotation: false,
+      points: [
         {
-          id: "stop1",
+          id: "point1",
           type: "comment",
-          text: "This walk has a loop in it!",
-          title: "Regular Stop 1",
+          text: "This canvas has a loop in it!",
+          title: "Regular Point 1",
           isStartPoint: true,
-          nextStop: "stop2",
+          nextPoint: "point2",
           top: 10,
           left: 200,
         },
         {
-          id: "stop2",
+          id: "point2",
           title: "Example of embedding audio",
           type: "audio",
           url:
             "https://archive.org/embed/amateur_cracksman_librivox/amateur_cracksman_01_hornung.mp3",
-          nextStop: "stop3",
+          nextPoint: "point3",
           height: 30,
           top: 210,
           left: 200,
         },
         {
-          id: "stop3",
-          title: "Regular Stop 3",
+          id: "point3",
+          title: "Regular Point 3",
           type: "comment",
-          text: "This is stop 3",
-          nextStop: "stop4",
+          text: "This is point 3",
+          nextPoint: "point4",
           top: 410,
           left: 200,
         },
         {
-          id: "stop4",
+          id: "point4",
           title: "Decision point",
           type: "comment",
-          text: "This is stop 4. From here you can go two ways.",
-          nextStop: "stop5",
-          sideTrips: ["stop4-1"],
+          text: "This is point 4. From here you can go two ways.",
+          nextPoint: "point5",
+          sideTrips: ["point4-1"],
           top: 610,
           left: 200,
         },
         {
-          id: "stop4-1",
+          id: "point4-1",
           title: "Loop 1",
           type: "comment",
-          text: "This is loop stop 1!",
-          sideTrips: ["stop4-2"],
+          text: "This is loop point 1!",
+          sideTrips: ["point4-2"],
           top: 610,
           left: 800,
         },
         {
-          id: "stop4-2",
+          id: "point4-2",
           title: "Loop 2",
           type: "comment",
-          text: "This is loop stop 2!",
-          sideTrips: ["stop4-3"],
+          text: "This is loop point 2!",
+          sideTrips: ["point4-3"],
           top: 810,
           left: 800,
         },
         {
-          id: "stop4-3",
+          id: "point4-3",
           title: "Loop 3",
           type: "comment",
-          text: "This is loop stop 3!",
-          sideTrips: ["stop4-4"],
+          text: "This is loop point 3!",
+          sideTrips: ["point4-4"],
           top: 1010,
           left: 800,
         },
         {
-          id: "stop4-4",
+          id: "point4-4",
           title: "Loop 4",
           type: "comment",
-          text: "This is loop stop 4!",
-          sideTrips: ["stop4"],
+          text: "This is loop point 4!",
+          sideTrips: ["point4"],
           top: 1210,
           left: 800,
         },
         {
-          id: "stop5",
-          title: "Regular Stop 5",
+          id: "point5",
+          title: "Regular Point 5",
           type: "comment",
-          text: "This is stop 5.",
-          nextStop: "stop6",
+          text: "This is point 5.",
+          nextPoint: "point6",
           top: 810,
           left: 200,
         },
         {
-          id: "stop6",
-          title: "Regular Stop 6",
+          id: "point6",
+          title: "Regular Point 6",
           type: "comment",
-          text: "This is stop 6.",
-          nextStop: "stop7",
+          text: "This is point 6.",
+          nextPoint: "point7",
           top: 1010,
           left: 200,
         },
         {
-          id: "stop7",
+          id: "point7",
           type: "comment",
-          title: "Regular Stop 7",
-          text: "This is stop 7.",
-          nextStop: "stop8",
+          title: "Regular Point 7",
+          text: "This is point 7.",
+          nextPoint: "point8",
           top: 1210,
           left: 200,
         },
         {
-          id: "stop8",
+          id: "point8",
           type: "comment",
-          title: "Regular Stop 8",
-          text: "This is the last stop!",
+          title: "Regular Point 8",
+          text: "This is the last point!",
           isStopPoint: true,
           top: 1410,
           left: 200,
@@ -455,9 +459,10 @@ const canvasData = {
       title: "Software embed demo",
       author: "Dan Visel",
       date: "6 May 2021",
-      stops: [
+      useAnnotation: false,
+      points: [
         {
-          id: "stop8",
+          id: "point8",
           type: "comment",
           title: "Here's something to try",
           text:
@@ -465,7 +470,7 @@ const canvasData = {
           isStartPoint: true,
         },
         {
-          id: "stop2_1",
+          id: "point2_1",
           title: "The Secret of Monkey Island",
           type: "software",
           url: "https://archive.org/embed/mnkyega",
@@ -473,6 +478,12 @@ const canvasData = {
           left: 300,
           width: 640,
           height: 480,
+        },
+        {
+          id: "hypercardpoint",
+          title: "A Hypercard stack",
+          type: "software",
+          url: "https://archive.org/embed/hypercard_roman-mythology-demo",
         },
       ],
     },

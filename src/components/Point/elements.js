@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StopWrapper = styled.div`
+export const PointWrapper = styled.div`
   background-color: var(--white);
   box-sizing: border-box;
   color: var(--text);

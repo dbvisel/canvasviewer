@@ -1,30 +1,30 @@
 import * as React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Walk from "./../Walk";
-import SelectedStop from "./../SelectedStop";
-import { WalkModeWrapper } from "./elements";
+import Canvas from "./../Canvas";
+import SelectedPoint from "./../SelectedPoint";
+import { CanvasModeWrapper } from "./elements";
 
-const WalkMode = ({
-  currentWalk,
-  selectedStop,
-  setSelectedStop,
+const CanvasMode = ({
+  currentCanvas,
+  selectedPoint,
+  setSelectedPoint,
   showAnnotation,
   setPresentationMode,
 }) => {
   const canvas = React.useRef();
-  const myStartPoints = currentWalk.stops.filter((x) => x.isStartPoint);
+  const myStartPoints = currentCanvas.points.filter((x) => x.isStartPoint);
 
   React.useEffect(() => {
-    if (selectedStop && canvas.current) {
+    if (selectedPoint && canvas.current) {
       const canvasPosition = canvas.current.getBoundingClientRect();
-      const thisStop = canvas.current.querySelector(`#${selectedStop}`);
-      if (thisStop) {
-        const thisStopPosition = thisStop.getBoundingClientRect();
+      const thisPoint = canvas.current.querySelector(`#${selectedPoint}`);
+      if (thisPoint) {
+        const thisPointPosition = thisPoint.getBoundingClientRect();
 
-        const deltaX = thisStopPosition.x - canvasPosition.x - 10;
-        const deltaY = thisStopPosition.y - canvasPosition.y - 10;
-        // console.log(canvasPosition, thisStopPosition, deltaX, deltaY);
+        const deltaX = thisPointPosition.x - canvasPosition.x - 10;
+        const deltaY = thisPointPosition.y - canvasPosition.y - 10;
+        // console.log(canvasPosition, thisPointPosition, deltaX, deltaY);
 
         canvas.current.scrollTo({
           top: deltaY,
@@ -33,16 +33,18 @@ const WalkMode = ({
         });
       }
     }
-  }, [selectedStop]);
+  }, [selectedPoint]);
 
   return (
-    <WalkModeWrapper key={currentWalk.id} id="walkmode">
+    <CanvasModeWrapper key={currentCanvas.id} id="canvasmode">
       <nav>
-        {selectedStop ? (
-          <SelectedStop
-            currentWalk={currentWalk}
-            stop={currentWalk.stops.filter((x) => x.id === selectedStop)[0]}
-            setSelectedStop={setSelectedStop}
+        {selectedPoint ? (
+          <SelectedPoint
+            currentCanvas={currentCanvas}
+            point={
+              currentCanvas.points.filter((x) => x.id === selectedPoint)[0]
+            }
+            setSelectedPoint={setSelectedPoint}
             setPresentationMode={setPresentationMode}
           />
         ) : myStartPoints ? (
@@ -53,7 +55,7 @@ const WalkMode = ({
                 key={`startpoint_${index}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  setSelectedStop(startpoint.id);
+                  setSelectedPoint(startpoint.id);
                 }}
               >
                 {startpoint.title
@@ -69,24 +71,24 @@ const WalkMode = ({
       <DndProvider backend={HTML5Backend}>
         <main
           ref={canvas}
-          key={`dummy_${currentWalk.id}`}
+          key={`dummy_${currentCanvas.id}`}
           onClick={(e) => {
             e.preventDefault();
-            setSelectedStop("");
+            setSelectedPoint("");
           }}
         >
-          <Walk
-            stops={currentWalk.stops}
-            selectedStop={selectedStop}
-            setSelectedStop={setSelectedStop}
+          <Canvas
+            points={currentCanvas.points}
+            selectedPoint={selectedPoint}
+            setSelectedPoint={setSelectedPoint}
             showAnnotation={showAnnotation}
-            walkId={currentWalk.id}
+            canvasId={currentCanvas.id}
             setPresentationMode={setPresentationMode}
           />
         </main>
       </DndProvider>
-    </WalkModeWrapper>
+    </CanvasModeWrapper>
   );
 };
 
-export default WalkMode;
+export default CanvasMode;

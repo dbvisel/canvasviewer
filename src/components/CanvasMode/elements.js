@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const WalkModeWrapper = styled.div`
+export const CanvasModeWrapper = styled.div`
   display: flex;
   min-height: 100%;
   min-width: 100%;

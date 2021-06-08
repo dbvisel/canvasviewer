@@ -27,7 +27,7 @@ export const PresentationModeDiv = styled.div`
   }
 `;
 
-export const PresentationStopWrapper = styled.div`
+export const PresentationPointWrapper = styled.div`
   box-sizing: border-box;
   background-color: var(--white);
   color: var(--text);
@@ -36,7 +36,7 @@ export const PresentationStopWrapper = styled.div`
   padding: var(--innerMargin);
   padding: 0;
   border-radius: var(--innerMargin);
-  --stopColor: var(--highlightColor);
+  --pointColor: var(--highlightColor);
   display: flex;
   justify-content: center;
   align-items: center;

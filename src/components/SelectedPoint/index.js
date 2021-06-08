@@ -1,39 +1,40 @@
 import React from "react";
-import { SelectedStopDiv } from "./elements";
+import { SelectedPointDiv } from "./elements";
 
 const usePreviousSideTrips = false;
 
 // TODO: clean this up. It's a mess.
 
-const SelectedStop = ({
-  stop,
-  setSelectedStop,
+const SelectedPoint = ({
+  point,
+  setSelectedPoint,
   setPresentationMode,
-  currentWalk,
+  currentCanvas,
   isBottom,
 }) => {
-  const getPreviousStop = (id) => {
-    let previousStop = "";
-    for (let i = 0; i < currentWalk.stops.length; i++) {
+  const getPreviousPoint = (id) => {
+    let previousPoint = "";
+    for (let i = 0; i < currentCanvas.points.length; i++) {
       if (
-        currentWalk.stops[i].nextStop &&
-        currentWalk.stops[i].nextStop === id
+        currentCanvas.points[i].nextPoint &&
+        currentCanvas.points[i].nextPoint === id
       ) {
-        previousStop = currentWalk.stops[i].id;
+        previousPoint = currentCanvas.points[i].id;
       }
     }
-    return previousStop;
+    return previousPoint;
   };
 
   const getPreviousSideTrips = (id) => {
     const previousSideTrips = [];
-    for (let i = 0; i < currentWalk.stops.length; i++) {
+    for (let i = 0; i < currentCanvas.points.length; i++) {
       if (
-        currentWalk.stops[i].sideTrips &&
-        currentWalk.stops[i].sideTrips.length
+        currentCanvas.points[i].sideTrips &&
+        currentCanvas.points[i].sideTrips.length
       ) {
-        if (currentWalk.stops[i].sideTrips.indexOf(id) > -1) {
-          previousSideTrips[previousSideTrips.length] = currentWalk.stops[i].id;
+        if (currentCanvas.points[i].sideTrips.indexOf(id) > -1) {
+          previousSideTrips[previousSideTrips.length] =
+            currentCanvas.points[i].id;
         }
       }
     }
@@ -41,34 +42,34 @@ const SelectedStop = ({
   };
 
   const getTitleFromId = (id) => {
-    const theStop = currentWalk.stops.filter((x) => x.id === id);
-    return theStop.length && theStop[0].title ? theStop[0].title : "";
+    const thePoint = currentCanvas.points.filter((x) => x.id === id);
+    return thePoint.length && thePoint[0].title ? thePoint[0].title : "";
   };
 
-  const previousStop = getPreviousStop(stop.id);
+  const previousPoint = getPreviousPoint(point.id);
 
-  const previousSideTrips = getPreviousSideTrips(stop.id);
+  const previousSideTrips = getPreviousSideTrips(point.id);
 
   return isBottom ? (
-    <SelectedStopDiv className="horizontal">
-      {previousStop ? (
+    <SelectedPointDiv className="horizontal">
+      {previousPoint ? (
         <button
           onClick={() => {
-            setSelectedStop(previousStop);
+            setSelectedPoint(previousPoint);
           }}
         >
           <span>←</span>
-          {getTitleFromId(previousStop)}
+          {getTitleFromId(previousPoint)}
         </button>
       ) : null}
       <div className="middle">
         <p>
           <strong>
-            {stop.title || `Stop ${currentWalk.stops.indexOf(stop) + 1}`}
+            {point.title || `Point ${currentCanvas.points.indexOf(point) + 1}`}
           </strong>{" "}
-          {stop.text || ""}
+          {point.text || ""}
         </p>
-        {stop.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
+        {point.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
           <div className="sidetrips">
             <h4>Side trips:</h4>
             {previousSideTrips && usePreviousSideTrips
@@ -76,7 +77,7 @@ const SelectedStop = ({
                   <button
                     key={index}
                     onClick={() => {
-                      setSelectedStop(previousSideTrip);
+                      setSelectedPoint(previousSideTrip);
                     }}
                   >
                     <span>↖</span>
@@ -84,12 +85,12 @@ const SelectedStop = ({
                   </button>
                 ))
               : null}
-            {stop.sideTrips
-              ? stop.sideTrips.map((sideTrip, index) => (
+            {point.sideTrips
+              ? point.sideTrips.map((sideTrip, index) => (
                   <button
                     key={index}
                     onClick={() => {
-                      setSelectedStop(sideTrip);
+                      setSelectedPoint(sideTrip);
                     }}
                   >
                     <span>↘</span>
@@ -100,54 +101,54 @@ const SelectedStop = ({
           </div>
         ) : null}
       </div>
-      {stop.nextStop ? (
+      {point.nextPoint ? (
         <button
           onClick={() => {
-            setSelectedStop(stop.nextStop);
+            setSelectedPoint(point.nextPoint);
           }}
         >
-          {getTitleFromId(stop.nextStop)}
+          {getTitleFromId(point.nextPoint)}
           <span>→</span>
         </button>
       ) : null}
-    </SelectedStopDiv>
+    </SelectedPointDiv>
   ) : (
-    <SelectedStopDiv className="vertical">
+    <SelectedPointDiv className="vertical">
       <div>
         <p>
           <strong>
-            {stop.title || `Stop ${currentWalk.stops.indexOf(stop) + 1}`}
+            {point.title || `Point ${currentCanvas.points.indexOf(point) + 1}`}
           </strong>
         </p>
-        {stop.text ? <p>{stop.text}</p> : null}
+        {point.text ? <p>{point.text}</p> : null}
       </div>
-      {previousStop || stop.nextStop ? (
+      {previousPoint || point.nextPoint ? (
         <div>
           <hr />
           <h4>On this path:</h4>
-          {previousStop ? (
+          {previousPoint ? (
             <button
               onClick={() => {
-                setSelectedStop(previousStop);
+                setSelectedPoint(previousPoint);
               }}
             >
               <span>←</span>
-              {getTitleFromId(previousStop)}
+              {getTitleFromId(previousPoint)}
             </button>
           ) : null}
-          {stop.nextStop ? (
+          {point.nextPoint ? (
             <button
               onClick={() => {
-                setSelectedStop(stop.nextStop);
+                setSelectedPoint(point.nextPoint);
               }}
             >
-              {getTitleFromId(stop.nextStop)}
+              {getTitleFromId(point.nextPoint)}
               <span>→</span>
             </button>
           ) : null}
         </div>
       ) : null}
-      {stop.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
+      {point.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
         <div className="sidetrips">
           <hr />
           <h4>Side trips:</h4>
@@ -156,7 +157,7 @@ const SelectedStop = ({
                 <button
                   key={index}
                   onClick={() => {
-                    setSelectedStop(previousSideTrip);
+                    setSelectedPoint(previousSideTrip);
                   }}
                 >
                   <span>↖</span>
@@ -164,12 +165,12 @@ const SelectedStop = ({
                 </button>
               ))
             : null}
-          {stop.sideTrips
-            ? stop.sideTrips.map((sideTrip, index) => (
+          {point.sideTrips
+            ? point.sideTrips.map((sideTrip, index) => (
                 <button
                   key={index}
                   onClick={() => {
-                    setSelectedStop(sideTrip);
+                    setSelectedPoint(sideTrip);
                   }}
                 >
                   <span>↘</span>
@@ -189,8 +190,8 @@ const SelectedStop = ({
           Presentation mode
         </button>
       </div>
-    </SelectedStopDiv>
+    </SelectedPointDiv>
   );
 };
 
-export default SelectedStop;
+export default SelectedPoint;

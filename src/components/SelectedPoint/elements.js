@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SelectedStopDiv = styled.div`
+export const SelectedPointDiv = styled.div`
   display: flex;
   flex-direction: ${(props) => (props.isBottom ? "row" : "column")};
   justify-content: center;

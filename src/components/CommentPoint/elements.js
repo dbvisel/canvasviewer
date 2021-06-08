@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const CommentStopDiv = styled.div`
+export const CommentPointDiv = styled.div`
   box-sizing: border-box;
   padding: var(--innerMargin);
   border-radius: 4px;
-  border: 2px solid var(--stopColor);
+  border: 2px solid var(--pointColor);
   background-color: var(--backgroundColor);
   max-width: 250px;
   border-color: ${(props) =>
@@ -12,7 +12,7 @@ export const CommentStopDiv = styled.div`
       ? "green"
       : props.isStopPoint
       ? "red"
-      : "var(--stopColor)"};
+      : "var(--pointColor)"};
   &.presentationmode {
     max-width: initial;
     width: 100%;

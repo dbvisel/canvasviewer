@@ -2,62 +2,66 @@ import * as React from "react";
 import Header from "./../components/Header";
 import Layout from "./../components/Layout";
 import PresentationMode from "./../components/PresentationMode";
-import WalkMode from "./../components/WalkMode";
+import CanvasMode from "./../components/CanvasMode";
 import GraphMode from "./../components/GraphMode";
 import AnnotationPopUp from "./../components/AnnotationPopUp";
 
 const TemplatePage = ({ pageContext }) => {
-  const currentWalk = pageContext.myData;
-  const [selectedStop, setSelectedStop] = React.useState("");
-  const [mode, setMode] = React.useState("walk");
+  const currentCanvas = pageContext.myData;
+  const [selectedPoint, setSelectedPoint] = React.useState("");
+  const [mode, setMode] = React.useState("canvas");
   const [annotationShown, setAnnotationShown] = React.useState(false);
-  const [annotationId, setAnnotationId] = React.useState(currentWalk.id);
+  const [annotationId, setAnnotationId] = React.useState(currentCanvas.id);
   const [annotationTitle, setAnnotationTitle] = React.useState(
-    currentWalk.title
+    currentCanvas.title
   );
   const [flag, setFlag] = React.useState(false);
 
   React.useEffect(() => {
-    if (selectedStop) {
-      const thisStop = currentWalk.stops.filter(
-        (x) => x.id === selectedStop
+    // check if canvas has a spine
+  }, []);
+
+  React.useEffect(() => {
+    if (selectedPoint) {
+      const thisPoint = currentCanvas.points.filter(
+        (x) => x.id === selectedPoint
       )[0];
-      setAnnotationId(currentWalk.id + "-" + selectedStop);
+      setAnnotationId(currentCanvas.id + "-" + selectedPoint);
       setAnnotationTitle(
-        thisStop.title || `Stop ${currentWalk.stops.indexOf(thisStop) + 1}`
+        thisPoint.title ||
+          `Point ${currentCanvas.points.indexOf(thisPoint) + 1}`
       );
     } else {
-      setAnnotationId(currentWalk.id);
-      setAnnotationTitle(currentWalk.title);
+      setAnnotationId(currentCanvas.id);
+      setAnnotationTitle(currentCanvas.title);
     }
-  }, [selectedStop, currentWalk]);
+  }, [selectedPoint, currentCanvas]);
 
   return (
     <Layout>
       <Header
-        currentWalk={currentWalk}
+        currentCanvas={currentCanvas}
         mode={mode}
         setMode={setMode}
-        setSelectedStop={setSelectedStop}
         setAnnotationShown={() => {
-          setAnnotationId(currentWalk.id);
+          setAnnotationId(currentCanvas.id);
           setAnnotationShown(true);
         }}
         key={mode + String(flag)}
       />
       {mode === "presentation" ? (
         <PresentationMode
-          currentWalk={currentWalk}
-          selectedStop={selectedStop}
-          setSelectedStop={setSelectedStop}
+          currentCanvas={currentCanvas}
+          selectedPoint={selectedPoint}
+          setSelectedPoint={setSelectedPoint}
         />
-      ) : mode === "walk" ? (
-        <WalkMode
-          currentWalk={currentWalk}
-          selectedStop={selectedStop}
-          setSelectedStop={setSelectedStop}
+      ) : mode === "canvas" ? (
+        <CanvasMode
+          currentCanvas={currentCanvas}
+          selectedPoint={selectedPoint}
+          setSelectedPoint={setSelectedPoint}
           showAnnotation={(x) => {
-            setAnnotationId(currentWalk.id + "-" + x);
+            setAnnotationId(currentCanvas.id + "-" + x);
             setAnnotationShown(true);
           }}
           setPresentationMode={() => {
@@ -66,9 +70,9 @@ const TemplatePage = ({ pageContext }) => {
         />
       ) : (
         <GraphMode
-          currentWalk={currentWalk}
-          selectedStop={selectedStop}
-          setSelectedStop={setSelectedStop}
+          currentCanvas={currentCanvas}
+          selectedPoint={selectedPoint}
+          setSelectedPoint={setSelectedPoint}
           setPresentationMode={() => {
             setMode("presentation");
           }}

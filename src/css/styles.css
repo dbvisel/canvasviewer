@@ -42,7 +42,7 @@
   --navWidth: 200px;
   --headerHeight: 60px;
   --highlightColor: #2d8fd5;
-  --stopColor: firebrick;
+  --pointColor: firebrick;
   color: var(--textColor);
   font-family: var(--bodyFont);
   font-size: 16px;

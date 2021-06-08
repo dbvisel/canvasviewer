@@ -5,15 +5,15 @@ import { BiCommentAdd } from "react-icons/bi";
 import { HeaderDiv } from "./elements";
 import Config from "./../../config";
 
-const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
+const Header = ({ currentCanvas, mode, setMode, setAnnotationShown }) => {
   const [flag, setFlag] = React.useState(false);
-  const myUrl = `${Config.disqus.url}/${currentWalk.id}`;
+  const myUrl = `${Config.disqus.url}/${currentCanvas.id}`;
   return (
     <HeaderDiv>
       <h1>
         <Link to={"/"}>«&nbsp;</Link>
         {"  "}
-        {currentWalk.title}
+        {currentCanvas.title}
         <a
           href="/#"
           className="comment"
@@ -28,9 +28,9 @@ const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
             config={{
               url: myUrl,
               identifier:
-                currentWalk.id +
+                currentCanvas.id +
                 "_0" /* https://github.com/disqus/disqus-react/issues/83 */,
-              title: currentWalk.id,
+              title: currentCanvas.id,
               language: "en_US",
             }}
           >
@@ -50,7 +50,7 @@ const Header = ({ currentWalk, mode, setMode, setAnnotationShown }) => {
             setFlag(() => !flag);
           }}
         >
-          <option value="walk">Walk</option>
+          <option value="canvas">Canvas</option>
           <option value="presentation">Presentation</option>
           <option value="graph">Graph</option>
         </select>

@@ -1,47 +1,47 @@
 import React from "react";
 import { useDrop } from "react-dnd";
-import Stop from "./../Stop";
+import Point from "./../Point";
 import Config from "./../../config";
 import { ThickLine } from "./elements";
 
 //TODO: If there's been dragging, we need to recalc line positions. Maybe that should be done in state?
 // TODO: need to show previous things that link to currently selected
 
-export const ItemTypes = { STOP: "stop" };
+export const ItemTypes = { POINT: "point" };
 
 const defaultTop = (index) => index * 100 + 10;
 const defaultLeft = (index) => index * 100 + 10;
 
-const getCenter = (stop) => {
+const getCenter = (point) => {
   // TODO: deal with actuality rather than what's defined
-  const defaults = Config.defaultSizes[stop.type];
-  if (typeof stop.left === "undefined") {
-    stop.left = defaultLeft(stop.index);
+  const defaults = Config.defaultSizes[point.type];
+  if (typeof point.left === "undefined") {
+    point.left = defaultLeft(point.index);
   }
-  if (typeof stop.top === "undefined") {
-    stop.top = defaultTop(stop.index);
+  if (typeof point.top === "undefined") {
+    point.top = defaultTop(point.index);
   }
-  if (typeof stop.width === "undefined") {
-    stop.width = defaults.width;
+  if (typeof point.width === "undefined") {
+    point.width = defaults.width;
   }
-  if (typeof stop.height === "undefined") {
-    stop.height = defaults.height;
+  if (typeof point.height === "undefined") {
+    point.height = defaults.height;
   }
-  if (stop.width && stop.left && stop.top && stop.height) {
-    const centerX = stop.left + stop.width / 2;
-    const centerY = stop.top + stop.height / 2;
+  if (point.width && point.left && point.top && point.height) {
+    const centerX = point.left + point.width / 2;
+    const centerY = point.top + point.height / 2;
     return { x: centerX, y: centerY };
   }
-  console.log(stop);
+  console.log(point);
   return { x: "missing!", y: "missing!" };
 };
 
-const Walk = ({
-  stops,
-  selectedStop,
-  setSelectedStop,
+const Canvas = ({
+  points,
+  selectedPoint,
+  setSelectedPoint,
   showAnnotation,
-  walkId,
+  canvasId,
   setPresentationMode,
 }) => {
   const [boxes, setBoxes] = React.useState([]);
@@ -49,25 +49,25 @@ const Walk = ({
   const [myHeight, setMyHeight] = React.useState("100%");
   const innerCanvas = React.useRef(null);
 
-  // console.log(selectedStop);
+  // console.log(selectedPoint);
 
   React.useEffect(() => {
     if (!boxes.length) {
       // console.log("Setting boxes!");
       const newBoxes = [];
-      for (let i = 0; i < stops.length; i++) {
-        newBoxes[i] = stops[i];
+      for (let i = 0; i < points.length; i++) {
+        newBoxes[i] = points[i];
         newBoxes[i].index = i;
-        if (typeof stops[i].top === "undefined") {
+        if (typeof points[i].top === "undefined") {
           newBoxes[i].top = defaultTop(i);
         }
-        if (typeof stops[i].left === "undefined") {
+        if (typeof points[i].left === "undefined") {
           newBoxes[i].left = defaultLeft(i);
         }
       }
       setBoxes(newBoxes);
     }
-  }, [stops, boxes.length]);
+  }, [points, boxes.length]);
 
   const moveBox = React.useCallback(
     (index, left, top) => {
@@ -81,7 +81,7 @@ const Walk = ({
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.STOP,
+      accept: ItemTypes.POINT,
       drop(item, monitor) {
         const delta = monitor.getDifferenceFromInitialOffset();
         const left = Math.round(item.left + delta.x);
@@ -96,12 +96,12 @@ const Walk = ({
   React.useEffect(() => {
     //TODO: make this fire when everything has been drawn!
     if (innerCanvas.current) {
-      const stops = innerCanvas.current.querySelectorAll(".stop");
-      if (stops.length) {
+      const points = innerCanvas.current.querySelectorAll(".point");
+      if (points.length) {
         let rightMost = 0;
         let bottomMost = 0;
-        for (let i = 0; i < stops.length; i++) {
-          const thisSize = stops[i].getBoundingClientRect();
+        for (let i = 0; i < points.length; i++) {
+          const thisSize = points[i].getBoundingClientRect();
           rightMost = Math.max(rightMost, thisSize.x + thisSize.width);
           bottomMost = Math.max(bottomMost, thisSize.y + thisSize.height);
         }
@@ -113,9 +113,9 @@ const Walk = ({
     }
   }, []);
 
-  const getNextStop = (id) => {
+  const getNextPoint = (id) => {
     if (id) {
-      const results = stops.filter((x) => x.id === id);
+      const results = points.filter((x) => x.id === id);
       if (results.length) {
         return results[0];
       }
@@ -123,24 +123,24 @@ const Walk = ({
     return null;
   };
 
-  const thisStopIsMainSpine = (stop) => {
-    if (typeof stop.nextStop !== "undefined") {
+  const thisPointIsMainSpine = (point) => {
+    if (typeof point.nextPoint !== "undefined") {
       return true;
     }
-    // TODO: Check if another stop in the walk uses this as nextStop.
-    const nextStops = boxes
-      .map((x) => x.nextStop)
+    // TODO: Check if another point in the canvas uses this as nextPoint.
+    const nextPoints = boxes
+      .map((x) => x.nextPoint)
       .filter((x) => typeof x !== "undefined");
-    if (nextStops.indexOf(stop.id) > -1) {
+    if (nextPoints.indexOf(point.id) > -1) {
       return true;
     }
     return false;
   };
 
-  const getMyParentStop = (stop) => {
+  const getMyParentPoint = (point) => {
     for (let i = 0; i < boxes.length; i++) {
       if (boxes[i].sideTrips && boxes[i].sideTrips.length) {
-        if (boxes[i].sideTrips.indexOf(stop.id) > -1) {
+        if (boxes[i].sideTrips.indexOf(point.id) > -1) {
           return boxes[i].id;
         }
       }
@@ -151,49 +151,51 @@ const Walk = ({
   return (
     <div style={{ width: myWidth, height: myHeight }} ref={innerCanvas}>
       <div ref={drop} style={{ width: "100%", height: "100%" }}>
-        {boxes.map((stop, index) => {
-          const { x, y } = getCenter(stop);
-          const nextStop = stop.nextStop ? getNextStop(stop.nextStop) : {};
+        {boxes.map((point, index) => {
+          const { x, y } = getCenter(point);
+          const nextPoint = point.nextPoint
+            ? getNextPoint(point.nextPoint)
+            : {};
           // console.log(
-          //   stop.id,
-          //   thisStopIsMainSpine(stop),
-          //   getMyParentStop(stop)
+          //   point.id,
+          //   thisPointIsMainSpine(poit),
+          //   getMyParentPoint(point)
           // );
           return (
-            <React.Fragment key={stop.id}>
-              {thisStopIsMainSpine(stop) ||
-              getMyParentStop(stop) === selectedStop ||
-              stop.id === selectedStop ? (
-                <Stop
-                  key={stop.id}
+            <React.Fragment key={point.id}>
+              {thisPointIsMainSpine(point) ||
+              getMyParentPoint(point) === selectedPoint ||
+              point.id === selectedPoint ? (
+                <Point
+                  key={point.id}
                   index={index}
-                  stopData={stop}
-                  selectedStop={selectedStop}
+                  pointData={point}
+                  selectedPoint={selectedPoint}
                   showAnnotation={showAnnotation}
                   setPresentationMode={setPresentationMode}
                   selectThis={() => {
-                    setSelectedStop(stop.id);
+                    setSelectedPoint(point.id);
                   }}
-                  walkId={walkId}
+                  canvasId={canvasId}
                 />
               ) : null}
-              {stop.nextStop ? (
+              {point.nextPoint ? (
                 <ThickLine
                   x1={x}
                   y1={y}
-                  x2={getCenter(nextStop).x}
-                  y2={getCenter(nextStop).y}
+                  x2={getCenter(nextPoint).x}
+                  y2={getCenter(nextPoint).y}
                 />
               ) : null}
-              {stop.sideTrips && stop.sideTrips.length
-                ? stop.sideTrips.map((sideTrip, index) => {
-                    const thisSideTrip = getNextStop(sideTrip);
+              {point.sideTrips && point.sideTrips.length
+                ? point.sideTrips.map((sideTrip, index) => {
+                    const thisSideTrip = getNextPoint(sideTrip);
                     // TODO: check whether to draw the line
                     const drawLine =
-                      (thisStopIsMainSpine(stop) ||
-                        getMyParentStop(stop) === selectedStop) &&
-                      (thisStopIsMainSpine(thisSideTrip) ||
-                        getMyParentStop(thisSideTrip) === selectedStop);
+                      (thisPointIsMainSpine(point) ||
+                        getMyParentPoint(point) === selectedPoint) &&
+                      (thisPointIsMainSpine(thisSideTrip) ||
+                        getMyParentPoint(thisSideTrip) === selectedPoint);
 
                     return drawLine ? (
                       <ThickLine
@@ -215,4 +217,4 @@ const Walk = ({
   );
 };
 
-export default Walk;
+export default Canvas;

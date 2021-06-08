@@ -1,37 +1,36 @@
 import * as React from "react";
 import Graph from "react-graph-vis";
-import SelectedStop from "./../SelectedStop";
+import SelectedPoint from "./../SelectedPoint";
 import { GraphModeDiv } from "./elements";
 
-//TODO: distinguish nextStop/sideTrips
+//TODO: distinguish nextPoint/sideTrips
 
 const GraphMode = ({
-  currentWalk,
-  selectedStop,
-  setSelectedStop,
+  currentCanvas,
+  selectedPoint,
+  setSelectedPoint,
   setPresentationMode,
 }) => {
   const [graph, setGraph] = React.useState(null);
-  const [walkId, setWalkId] = React.useState(currentWalk.id);
   const graphElement = React.useRef();
 
   React.useEffect(() => {
+    // NOTE: this only actually fires when this component is initialized. We don't actually change canvas while this mode is instantiated
     console.log("Rebuilding graph!");
-    setWalkId(currentWalk.id);
-    const makeEdges = (stops) => {
+    const makeEdges = (points) => {
       const edges = [];
-      for (let i = 0; i < stops.length; i++) {
-        if (stops[i].nextStop) {
+      for (let i = 0; i < points.length; i++) {
+        if (points[i].nextPoint) {
           edges[edges.length] = {
-            from: currentWalk.id + "_" + stops[i].id,
-            to: currentWalk.id + "_" + stops[i].nextStop,
+            from: currentCanvas.id + "_" + points[i].id,
+            to: currentCanvas.id + "_" + points[i].nextPoint,
           };
         }
-        if (stops[i].sideTrips && stops[i].sideTrips.length) {
-          for (let j = 0; j < stops[i].sideTrips.length; j++) {
+        if (points[i].sideTrips && points[i].sideTrips.length) {
+          for (let j = 0; j < points[i].sideTrips.length; j++) {
             edges[edges.length] = {
-              from: currentWalk.id + "_" + stops[i].id,
-              to: currentWalk.id + "_" + stops[i].sideTrips[j],
+              from: currentCanvas.id + "_" + points[i].id,
+              to: currentCanvas.id + "_" + points[i].sideTrips[j],
             };
           }
         }
@@ -40,17 +39,17 @@ const GraphMode = ({
     };
 
     const thisGraph = {
-      nodes: currentWalk.stops.map((x) => {
+      nodes: currentCanvas.points.map((x) => {
         return {
-          id: currentWalk.id + "_" + x.id,
+          id: currentCanvas.id + "_" + x.id,
           label: x.title || x.id,
           type: x.type,
         };
       }),
-      edges: makeEdges(currentWalk.stops),
+      edges: makeEdges(currentCanvas.points),
     };
     setGraph(thisGraph);
-  }, [currentWalk]);
+  }, [currentCanvas]);
 
   const options = {
     layout: {
@@ -68,18 +67,17 @@ const GraphMode = ({
       // console.log(nodes, edges);
       if (nodes.length) {
         console.log(nodes[0]);
-        setSelectedStop(nodes[0].split(walkId + "_")[1]);
+        setSelectedPoint(nodes[0].split(currentCanvas.id + "_")[1]);
       }
     },
   };
-  console.log(currentWalk, graph, graphElement.current);
+  // console.log(currentCanvas, graph, graphElement.current);
 
   return (
     <GraphModeDiv>
       {graph !== null ? (
         <Graph
           ref={graphElement}
-          key={walkId}
           graph={graph}
           options={options}
           events={events}
@@ -89,11 +87,13 @@ const GraphMode = ({
         />
       ) : null}
       <nav>
-        {selectedStop ? (
-          <SelectedStop
-            currentWalk={currentWalk}
-            stop={currentWalk.stops.filter((x) => x.id === selectedStop)[0]}
-            setSelectedStop={setSelectedStop}
+        {selectedPoint ? (
+          <SelectedPoint
+            currentCanvas={currentCanvas}
+            point={
+              currentCanvas.points.filter((x) => x.id === selectedPoint)[0]
+            }
+            setSelectedPoint={setSelectedPoint}
             setPresentationMode={setPresentationMode}
           />
         ) : null}

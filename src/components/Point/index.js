@@ -9,51 +9,51 @@ import AudioEmbed from "./../AudioEmbed";
 import BookEmbed from "./../BookEmbed";
 import ImageEmbed from "./../ImageEmbed";
 import WebEmbed from "./../WebEmbed";
-import CommentStop from "./../CommentStop";
+import CommentPoint from "./../CommentPoint";
 import SoftwareEmbed from "./../SoftwareEmbed";
-import { StopWrapper } from "./elements";
-import { ItemTypes } from "./../Walk";
+import { PointWrapper } from "./elements";
+import { ItemTypes } from "./../Canvas";
 
-const Stop = ({
+const Point = ({
   index,
-  stopData,
-  selectedStop,
+  pointData,
+  selectedPoint,
   selectThis,
   showAnnotation,
-  walkId,
+  canvasId,
   setPresentationMode,
 }) => {
-  const myTitle = stopData.title || `Stop ${index + 1}`;
-  const myUrl = `${Config.disqus.url}/${stopData.id}`;
-  const myCommentId = walkId + "-" + stopData.id;
+  const myTitle = pointData.title || `Point ${index + 1}`;
+  const myUrl = `${Config.disqus.url}/${pointData.id}`;
+  const myCommentId = canvasId + "-" + pointData.id;
 
   const [, /*{ isDragging }, */ drag] = useDrag(
     () => ({
-      type: ItemTypes.STOP,
+      type: ItemTypes.POINT,
       item: {
-        ...stopData,
-        left: stopData.left,
-        top: stopData.top,
+        ...pointData,
+        left: pointData.left,
+        top: pointData.top,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [stopData]
+    [pointData]
   );
   // if (isDragging) {
-  //   console.log("dragging!", stopData);
+  //   console.log("dragging!", pointData);
   // }
 
   return (
-    <StopWrapper
-      id={stopData.id}
-      top={stopData.top}
-      left={stopData.left}
-      className={`stop ${selectedStop === stopData.id ? "selected" : ""}`}
+    <PointWrapper
+      id={pointData.id}
+      top={pointData.top}
+      left={pointData.left}
+      className={`point ${selectedPoint === pointData.id ? "selected" : ""}`}
       onClick={(e) => {
         e.stopPropagation();
-        selectThis(stopData.id);
+        selectThis(pointData.id);
       }}
       ref={drag}
     >
@@ -69,57 +69,57 @@ const Stop = ({
           <FiMaximize2 />
         </a>
       </h2>
-      {stopData.type && stopData.type === "video" ? (
+      {pointData.type && pointData.type === "video" ? (
         <VideoEmbed
           id={myCommentId}
-          src={stopData.url}
-          width={stopData.width}
-          height={stopData.height}
+          src={pointData.url}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "audio" ? (
+      ) : pointData.type && pointData.type === "audio" ? (
         <AudioEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "book" ? (
+      ) : pointData.type && pointData.type === "book" ? (
         <BookEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "image" ? (
+      ) : pointData.type && pointData.type === "image" ? (
         <ImageEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "web" ? (
+      ) : pointData.type && pointData.type === "web" ? (
         <WebEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "comment" ? (
-        <CommentStop
-          text={stopData.text}
+      ) : pointData.type && pointData.type === "comment" ? (
+        <CommentPoint
+          text={pointData.text}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
-      ) : stopData.type && stopData.type === "software" ? (
+      ) : pointData.type && pointData.type === "software" ? (
         <SoftwareEmbed
-          src={stopData.url}
+          src={pointData.url}
           id={myCommentId}
-          width={stopData.width}
-          height={stopData.height}
+          width={pointData.width}
+          height={pointData.height}
         />
       ) : (
-        <div>{JSON.stringify(stopData)}</div>
+        <div>{JSON.stringify(pointData)}</div>
       )}
       <h3>
         <a
@@ -127,7 +127,7 @@ const Stop = ({
           className="comment"
           onClick={(e) => {
             e.preventDefault();
-            showAnnotation(stopData.id);
+            showAnnotation(pointData.id);
           }}
         >
           <BiCommentAdd />
@@ -144,8 +144,8 @@ const Stop = ({
           ></CommentCount>
         </a>
       </h3>
-    </StopWrapper>
+    </PointWrapper>
   );
 };
 
-export default Stop;
+export default Point;
