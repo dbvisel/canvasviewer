@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDrop } from "react-dnd";
 import Point from "./../Point";
 import Config from "./../../config";
-import { ThickLine } from "./elements";
+import { ThickLine, ThinLine } from "./elements";
 
 //TODO: If there's been dragging, we need to recalc line positions. Maybe that should be done in state?
 // TODO: need to show previous things that link to currently selected
@@ -44,6 +45,7 @@ const Canvas = ({
   canvasId,
   setPresentationMode,
   useAnnotation,
+  hasSpine,
 }) => {
   const [boxes, setBoxes] = React.useState([]);
   const [myWidth, setMyWidth] = React.useState("100%");
@@ -172,7 +174,8 @@ const Canvas = ({
             <React.Fragment key={point.id}>
               {thisPointIsMainSpine(point) ||
               getMyParentPoint(point) === selectedPoint ||
-              point.id === selectedPoint ? (
+              point.id === selectedPoint ||
+              !hasSpine ? (
                 <Point
                   key={point.id}
                   index={index}
@@ -208,13 +211,12 @@ const Canvas = ({
                         getMyParentPoint(thisSideTrip) === selectedPoint);
 
                     return drawLine ? (
-                      <ThickLine
+                      <ThinLine
                         key={index}
                         x1={x}
                         y1={y}
                         x2={getCenter(thisSideTrip).x}
                         y2={getCenter(thisSideTrip).y}
-                        isAnnotation
                       />
                     ) : null;
                   })
@@ -228,3 +230,8 @@ const Canvas = ({
 };
 
 export default Canvas;
+
+Canvas.propTypes = {
+  useAnnotation: PropTypes.bool,
+  hasSpine: PropTypes.bool,
+};

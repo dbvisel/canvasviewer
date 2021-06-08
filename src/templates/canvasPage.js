@@ -19,9 +19,9 @@ const TemplatePage = ({ pageContext }) => {
   );
   const [flag, setFlag] = React.useState(false);
 
-  React.useEffect(() => {
-    // check if canvas has a spine
-  }, []);
+  const hasSpine =
+    currentCanvas.points.filter((x) => typeof x.nextPoint !== "undefined")
+      .length > 0;
 
   React.useEffect(() => {
     if (selectedPoint) {
@@ -71,6 +71,7 @@ const TemplatePage = ({ pageContext }) => {
             setMode("presentation");
           }}
           useAnnotation={useAnnotation}
+          hasSpine={hasSpine}
         />
       ) : (
         <GraphMode

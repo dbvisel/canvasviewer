@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Canvas from "./../Canvas";
@@ -12,6 +13,7 @@ const CanvasMode = ({
   showAnnotation,
   setPresentationMode,
   useAnnotation,
+  hasSpine,
 }) => {
   const canvas = React.useRef();
   const myStartPoints = currentCanvas.points.filter((x) => x.isStartPoint);
@@ -86,6 +88,7 @@ const CanvasMode = ({
             canvasId={currentCanvas.id}
             setPresentationMode={setPresentationMode}
             useAnnotation={useAnnotation}
+            hasSpine={hasSpine}
           />
         </main>
       </DndProvider>
@@ -94,3 +97,12 @@ const CanvasMode = ({
 };
 
 export default CanvasMode;
+
+CanvasMode.propTypes = {
+  currentCanvas: PropTypes.object,
+  selectedPoint: PropTypes.string,
+  setSelectedPoint: PropTypes.func,
+  showAnnotation: PropTypes.func,
+  useAnnotation: PropTypes.bool,
+  hasSpine: PropTypes.bool,
+};
