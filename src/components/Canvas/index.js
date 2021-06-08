@@ -49,6 +49,7 @@ const Canvas = ({
   const [myWidth, setMyWidth] = React.useState("100%");
   const [myHeight, setMyHeight] = React.useState("100%");
   const innerCanvas = React.useRef(null);
+  const [dragCount, setDragCount] = React.useState(0);
 
   // console.log(selectedPoint);
 
@@ -88,6 +89,7 @@ const Canvas = ({
         const left = Math.round(item.left + delta.x);
         const top = Math.round(item.top + delta.y);
         moveBox(item.index, left, top);
+        setDragCount((dragCount) => dragCount + 1);
         return undefined;
       },
     }),
@@ -150,7 +152,11 @@ const Canvas = ({
   };
 
   return (
-    <div style={{ width: myWidth, height: myHeight }} ref={innerCanvas}>
+    <div
+      style={{ width: myWidth, height: myHeight }}
+      ref={innerCanvas}
+      key={`flipflop${dragCount}`}
+    >
       <div ref={drop} style={{ width: "100%", height: "100%" }}>
         {boxes.map((point, index) => {
           const { x, y } = getCenter(point);
@@ -187,7 +193,9 @@ const Canvas = ({
                   y1={y}
                   x2={getCenter(nextPoint).x}
                   y2={getCenter(nextPoint).y}
-                />
+                >
+                  <div />
+                </ThickLine>
               ) : null}
               {point.sideTrips && point.sideTrips.length
                 ? point.sideTrips.map((sideTrip, index) => {

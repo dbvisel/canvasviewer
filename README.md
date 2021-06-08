@@ -10,13 +10,13 @@ Still images are generated with a build step: _npm run make-images_, which scree
 
 ## Issues
 
- - lines don't update if something is dragged in canvas mode
  - Throbbers aren't wonderful.
  - Dragging isn't wonderful & I suspect there's something buggy in my implementation of it.
  - Performance isn't wonderful because it's a bunch of iframes! 
  - Should show all annotations connected when something along a spine is selected
  - Should show previous annotation connection in SelectedPoint
  - If you have a canvas without a spine, it's hiding everything.
+ - My dummy script to generate screenshots isn't great at all.
 
 ## Demo needs
 

@@ -28,6 +28,7 @@
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "capture-website": "^2.0.1",
     "esm": "^3.2.25",
     "prettier": "2.2.1"
   },
@@ -39,7 +40,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "make-images": "rm static/images/*.png && node makeScreenShots.js",
+    "make-images": "rm static/images/*.png && node makeScreenShots.mjs",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {
