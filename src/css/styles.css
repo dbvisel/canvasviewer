@@ -80,3 +80,13 @@ button {
   background-color: var(--white);
   border: 1px solid var(--lineColor);
 }
+
+a {
+  color: var(--highlightColor);
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+a:hover {
+  text-decoration: underline;
+}

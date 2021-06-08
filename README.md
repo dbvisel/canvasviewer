@@ -21,7 +21,6 @@ Still images are generated with a build step: _npm run make-images_, which scree
 ## Demo needs
 
  - This is fake content and not actually compelling! 
- - make annotation on/off per canvas
  - add additional embed types:
    - image carousel? Is that essential?
    - another canvas

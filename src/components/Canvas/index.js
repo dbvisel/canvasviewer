@@ -43,6 +43,7 @@ const Canvas = ({
   showAnnotation,
   canvasId,
   setPresentationMode,
+  useAnnotation,
 }) => {
   const [boxes, setBoxes] = React.useState([]);
   const [myWidth, setMyWidth] = React.useState("100%");
@@ -177,6 +178,7 @@ const Canvas = ({
                     setSelectedPoint(point.id);
                   }}
                   canvasId={canvasId}
+                  useAnnotation={useAnnotation}
                 />
               ) : null}
               {point.nextPoint ? (

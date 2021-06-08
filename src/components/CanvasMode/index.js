@@ -11,6 +11,7 @@ const CanvasMode = ({
   setSelectedPoint,
   showAnnotation,
   setPresentationMode,
+  useAnnotation,
 }) => {
   const canvas = React.useRef();
   const myStartPoints = currentCanvas.points.filter((x) => x.isStartPoint);
@@ -84,6 +85,7 @@ const CanvasMode = ({
             showAnnotation={showAnnotation}
             canvasId={currentCanvas.id}
             setPresentationMode={setPresentationMode}
+            useAnnotation={useAnnotation}
           />
         </main>
       </DndProvider>

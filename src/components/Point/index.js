@@ -22,6 +22,7 @@ const Point = ({
   showAnnotation,
   canvasId,
   setPresentationMode,
+  useAnnotation,
 }) => {
   const myTitle = pointData.title || `Point ${index + 1}`;
   const myUrl = `${Config.disqus.url}/${pointData.id}`;
@@ -122,27 +123,29 @@ const Point = ({
         <div>{JSON.stringify(pointData)}</div>
       )}
       <h3>
-        <a
-          href="/#"
-          className="comment"
-          onClick={(e) => {
-            e.preventDefault();
-            showAnnotation(pointData.id);
-          }}
-        >
-          <BiCommentAdd />
-          <CommentCount
-            shortname={Config.disqus.shortName}
-            config={{
-              url: myUrl,
-              identifier:
-                myCommentId +
-                "_0" /* https://github.com/disqus/disqus-react/issues/83 */,
-              title: myCommentId,
-              language: "en_US",
+        {useAnnotation ? (
+          <a
+            href="/#"
+            className="comment"
+            onClick={(e) => {
+              e.preventDefault();
+              showAnnotation(pointData.id);
             }}
-          ></CommentCount>
-        </a>
+          >
+            <BiCommentAdd />
+            <CommentCount
+              shortname={Config.disqus.shortName}
+              config={{
+                url: myUrl,
+                identifier:
+                  myCommentId +
+                  "_0" /* https://github.com/disqus/disqus-react/issues/83 */,
+                title: myCommentId,
+                language: "en_US",
+              }}
+            ></CommentCount>
+          </a>
+        ) : null}
       </h3>
     </PointWrapper>
   );

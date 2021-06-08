@@ -8,6 +8,8 @@ import AnnotationPopUp from "./../components/AnnotationPopUp";
 
 const TemplatePage = ({ pageContext }) => {
   const currentCanvas = pageContext.myData;
+  const useAnnotation = currentCanvas.useAnnotation || false;
+
   const [selectedPoint, setSelectedPoint] = React.useState("");
   const [mode, setMode] = React.useState("canvas");
   const [annotationShown, setAnnotationShown] = React.useState(false);
@@ -43,6 +45,7 @@ const TemplatePage = ({ pageContext }) => {
         currentCanvas={currentCanvas}
         mode={mode}
         setMode={setMode}
+        useAnnotation={useAnnotation}
         setAnnotationShown={() => {
           setAnnotationId(currentCanvas.id);
           setAnnotationShown(true);
@@ -67,6 +70,7 @@ const TemplatePage = ({ pageContext }) => {
           setPresentationMode={() => {
             setMode("presentation");
           }}
+          useAnnotation={useAnnotation}
         />
       ) : (
         <GraphMode
