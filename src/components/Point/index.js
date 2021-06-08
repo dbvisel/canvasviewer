@@ -4,13 +4,16 @@ import { BiCommentAdd } from "react-icons/bi";
 import { FiMaximize2 } from "react-icons/fi";
 import { CommentCount } from "disqus-react";
 import Config from "./../../config";
-import VideoEmbed from "./../VideoEmbed";
-import AudioEmbed from "./../AudioEmbed";
-import BookEmbed from "./../BookEmbed";
-import ImageEmbed from "./../ImageEmbed";
-import WebEmbed from "./../WebEmbed";
-import CommentPoint from "./../CommentPoint";
-import SoftwareEmbed from "./../SoftwareEmbed";
+import {
+  SoftwareEmbed,
+  WebEmbed,
+  ImageEmbed,
+  AudioEmbed,
+  BookEmbed,
+  CanvasEmbed,
+  VideoEmbed,
+  CommentPoint,
+} from "./../PointTypes";
 import { PointWrapper } from "./elements";
 import { ItemTypes } from "./../Canvas";
 
@@ -76,6 +79,15 @@ const Point = ({
           src={pointData.url}
           width={pointData.width}
           height={pointData.height}
+        />
+      ) : pointData.type && pointData.type === "canvas" ? (
+        <CanvasEmbed
+          src={pointData.url}
+          id={myCommentId}
+          width={pointData.width}
+          height={pointData.height}
+          title={pointData.title}
+          text={pointData.text}
         />
       ) : pointData.type && pointData.type === "audio" ? (
         <AudioEmbed

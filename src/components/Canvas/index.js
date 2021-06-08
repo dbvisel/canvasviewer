@@ -256,7 +256,6 @@ export default Canvas;
 
 Canvas.propTypes = {
   points: PropTypes.array,
-  setPresentationMode: PropTypes.string,
   setSelectedPoint: PropTypes.func,
   showAnnotation: PropTypes.func,
   canvasId: PropTypes.string,

@@ -10,7 +10,7 @@
  * Each point consists of:
  *
  * id: 						string, a unique ID for the point within the canvas, required
- * type: 					enum ("video" | "audio" | "book" | "comment" | "image" | "web" | "software") –
+ * type: 					enum ("video" | "audio" | "book" | "comment" | "image" | "web" | "software" | "canvas") –
  * 			 					This isn't required, but if it's not there (or not one of those), you'll just see JSON in the point.
  * 			 					"comment" is a special type in that it's not an iframe, it's just text.
  * title: 				string, a name for the point (if desired)
@@ -24,7 +24,7 @@
  * 								it could be declaared to be an endPoint.
  * sideTrips:			an array of IDs of points that this point could connect to.
  * 								sideTrips are for annotations – things that are not the main spine of the canvas.
- * url: 					string/URL, for type video, audio, book, image, web, or software, the embed link.
+ * url: 					string/URL, for type video, audio, book, image, web, software, or canvas, the embed link.
  * width:					number, width in pixels
  * height:				number, height in pixels
  * 								If width or height are not set, there are defaults for each media type.
@@ -281,12 +281,10 @@ const canvasData = {
         {
           id: "point4",
           nextPoint: "point5",
-          type: "book",
-          title: "A book viewer",
-          url:
-            "https://archive.org/embed/encyclopedia-britannica-and-intellectual-tools-of-the-future/page/n7/mode/1up?view=theater&ui=embed",
-          text:
-            "This is a book viewer embed. I've done this as 1-up, though it could be done as 2-up. Note that it's going to a specific page.",
+          type: "canvas",
+          title: "The Alan Kay canvas",
+          url: "https://canvasviewer.netlify.app/alankaywalk",
+          text: "This is a link to the Alan Kay canvas. Click to go there.",
           left: 10,
           top: 700,
         },

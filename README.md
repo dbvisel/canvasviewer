@@ -20,7 +20,6 @@ Still images are generated with a build step: _npm run make-images_, which scree
  - This is fake content and not actually compelling! 
  - add additional embed types:
    - image carousel? Is that essential?
-   - another canvas
  - phone presentation mode
    - force presentation mode on vw < 767px?
  - next/prev points probably need names (for multiple previous/next points) 

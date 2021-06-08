@@ -14,6 +14,7 @@ const Config = {
     image: { width: 480, height: 480 },
     book: { width: 480, height: 640 },
     comment: { width: 250, height: 100 },
+    canvas: { width: 360, height: 180 },
   },
 };
 

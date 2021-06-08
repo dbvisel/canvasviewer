@@ -1,12 +1,15 @@
 import * as React from "react";
-import VideoEmbed from "./../VideoEmbed";
-import AudioEmbed from "./../AudioEmbed";
-import BookEmbed from "./../BookEmbed";
-import ImageEmbed from "./../ImageEmbed";
-import CommentPoint from "./../CommentPoint";
+import {
+  VideoEmbed,
+  AudioEmbed,
+  ImageEmbed,
+  SoftwareEmbed,
+  WebEmbed,
+  BookEmbed,
+  CanvasEmbed,
+  CommentPoint,
+} from "./../PointTypes";
 import SelectedPoint from "./../SelectedPoint";
-import SoftwareEmbed from "./../SoftwareEmbed";
-import WebEmbed from "./../WebEmbed";
 import { PresentationModeDiv, PresentationPointWrapper } from "./elements";
 
 const PresentationPoint = ({ pointData, canvasId }) => {
@@ -28,6 +31,16 @@ const PresentationPoint = ({ pointData, canvasId }) => {
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          presentationMode
+        />
+      ) : pointData.type && pointData.type === "canvas" ? (
+        <CanvasEmbed
+          src={pointData.url}
+          id={myCommentId}
+          width={pointData.width}
+          height={pointData.height}
+          title={pointData.title}
+          text={pointData.text}
           presentationMode
         />
       ) : pointData.type && pointData.type === "book" ? (
