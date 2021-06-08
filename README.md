@@ -2,7 +2,7 @@
 
 Demo done in React to demonstrate how a JSON data format could be used to present "canvases" of embedded items/sections of items from the Internet Archive, interleaved, if desired, with comments. This is done in React because that was an easy way to get a demo off the ground; it could be made in anything.
 
-This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://collagewalk.netlify.app.
+This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://canvasviewer.netlify.app.
 
 To run this locally, _npm install_, then _npm start_. Build with _npm run build_.
 
