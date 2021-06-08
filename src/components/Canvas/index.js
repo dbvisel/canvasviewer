@@ -52,6 +52,7 @@ const Canvas = ({
   const [myHeight, setMyHeight] = React.useState("100%");
   const innerCanvas = React.useRef(null);
   const [dragCount, setDragCount] = React.useState(0);
+  const [currentSpinePoint, setCurrentSpinePoint] = React.useState("");
 
   // console.log(selectedPoint);
 
@@ -129,15 +130,17 @@ const Canvas = ({
   };
 
   const thisPointIsMainSpine = (point) => {
-    if (typeof point.nextPoint !== "undefined") {
-      return true;
-    }
-    // TODO: Check if another point in the canvas uses this as nextPoint.
-    const nextPoints = boxes
-      .map((x) => x.nextPoint)
-      .filter((x) => typeof x !== "undefined");
-    if (nextPoints.indexOf(point.id) > -1) {
-      return true;
+    if (hasSpine) {
+      if (typeof point.nextPoint !== "undefined") {
+        return true;
+      }
+      // TODO: Check if another point in the canvas uses this as nextPoint.
+      const nextPoints = boxes
+        .map((x) => x.nextPoint)
+        .filter((x) => typeof x !== "undefined");
+      if (nextPoints.indexOf(point.id) > -1) {
+        return true;
+      }
     }
     return false;
   };
@@ -153,6 +156,18 @@ const Canvas = ({
     return null;
   };
 
+  const getPointFromId = (id) => boxes.filter((x) => x.id === id)[0];
+
+  const getMySpinePoint = (point) => {
+    // console.log("Getting spine point for", point.id);
+    if (thisPointIsMainSpine(point)) {
+      return point;
+    }
+    const myParentPointId = getMyParentPoint(point);
+    const myParentPoint = getPointFromId(myParentPointId);
+    return getMySpinePoint(myParentPoint);
+  };
+
   return (
     <div
       style={{ width: myWidth, height: myHeight }}
@@ -165,15 +180,11 @@ const Canvas = ({
           const nextPoint = point.nextPoint
             ? getNextPoint(point.nextPoint)
             : {};
-          // console.log(
-          //   point.id,
-          //   thisPointIsMainSpine(poit),
-          //   getMyParentPoint(point)
-          // );
+          // console.log(point.id, getMySpinePoint(point).id, currentSpinePoint);
           return (
             <React.Fragment key={point.id}>
               {thisPointIsMainSpine(point) ||
-              getMyParentPoint(point) === selectedPoint ||
+              (hasSpine && getMySpinePoint(point).id === currentSpinePoint) ||
               point.id === selectedPoint ||
               !hasSpine ? (
                 <Point
@@ -185,6 +196,18 @@ const Canvas = ({
                   setPresentationMode={setPresentationMode}
                   selectThis={() => {
                     setSelectedPoint(point.id);
+                    if (hasSpine) {
+                      if (thisPointIsMainSpine(point)) {
+                        setCurrentSpinePoint(point.id);
+                      } else {
+                        console.log(point.id, thisPointIsMainSpine(point));
+                        console.log(
+                          "Parent point: ",
+                          getMySpinePoint(point).id
+                        );
+                        setCurrentSpinePoint(getMySpinePoint(point).id);
+                      }
+                    }
                   }}
                   canvasId={canvasId}
                   useAnnotation={useAnnotation}
@@ -206,9 +229,9 @@ const Canvas = ({
                     // TODO: check whether to draw the line
                     const drawLine =
                       (thisPointIsMainSpine(point) ||
-                        getMyParentPoint(point) === selectedPoint) &&
+                        getMySpinePoint(point).id === currentSpinePoint) &&
                       (thisPointIsMainSpine(thisSideTrip) ||
-                        getMyParentPoint(thisSideTrip) === selectedPoint);
+                        getMySpinePoint(point).id === currentSpinePoint);
 
                     return drawLine ? (
                       <ThinLine
@@ -232,6 +255,12 @@ const Canvas = ({
 export default Canvas;
 
 Canvas.propTypes = {
+  points: PropTypes.array,
+  setPresentationMode: PropTypes.string,
+  setSelectedPoint: PropTypes.func,
+  showAnnotation: PropTypes.func,
+  canvasId: PropTypes.string,
+  setPresentationMode: PropTypes.func,
   useAnnotation: PropTypes.bool,
   hasSpine: PropTypes.bool,
 };
