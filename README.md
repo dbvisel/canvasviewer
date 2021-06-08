@@ -13,8 +13,6 @@ Still images are generated with a build step: _npm run make-images_, which scree
  - Throbbers aren't wonderful.
  - Dragging isn't wonderful & I suspect there's something buggy in my implementation of it.
  - Performance isn't wonderful because it's a bunch of iframes! 
- - Should show all annotations connected when something along a spine is selected
-   - make a second state that's just something along a spine.
  - My dummy script to generate screenshots isn't great at all.
 
 ## Demo needs

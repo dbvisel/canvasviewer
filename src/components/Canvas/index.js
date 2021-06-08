@@ -200,11 +200,11 @@ const Canvas = ({
                       if (thisPointIsMainSpine(point)) {
                         setCurrentSpinePoint(point.id);
                       } else {
-                        console.log(point.id, thisPointIsMainSpine(point));
-                        console.log(
-                          "Parent point: ",
-                          getMySpinePoint(point).id
-                        );
+                        // console.log(point.id, thisPointIsMainSpine(point));
+                        // console.log(
+                        //   "Parent point: ",
+                        //   getMySpinePoint(point).id
+                        // );
                         setCurrentSpinePoint(getMySpinePoint(point).id);
                       }
                     }
