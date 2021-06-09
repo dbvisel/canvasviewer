@@ -72,7 +72,7 @@ const GraphMode = ({
     },
   };
   // console.log(currentCanvas, graph, graphElement.current);
-
+  console.log(selectedPoint);
   return (
     <GraphModeDiv>
       {graph !== null ? (
@@ -86,8 +86,8 @@ const GraphMode = ({
           }}
         />
       ) : null}
-      <nav>
-        {selectedPoint ? (
+      {selectedPoint ? (
+        <nav>
           <SelectedPoint
             currentCanvas={currentCanvas}
             point={
@@ -96,8 +96,8 @@ const GraphMode = ({
             setSelectedPoint={setSelectedPoint}
             setPresentationMode={setPresentationMode}
           />
-        ) : null}
-      </nav>
+        </nav>
+      ) : null}
     </GraphModeDiv>
   );
 };

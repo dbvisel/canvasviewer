@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { CommentCount } from "disqus-react";
 import { BiCommentAdd } from "react-icons/bi";
@@ -67,3 +68,11 @@ const Header = ({
   );
 };
 export default Header;
+
+Header.propTypes = {
+  currentCanvas: PropTypes.object,
+  mode: PropTypes.string,
+  setMode: PropTypes.func,
+  setAnnotationShown: PropTypes.func,
+  useAnnotation: PropTypes.bool,
+};

@@ -102,7 +102,9 @@ const PresentationMode = ({
     if (selectedPoint === "") {
       console.log("No point selected!");
       // console.log(currentCanvas.points[0].id);
-      setSelectedPoint(currentCanvas.points[0].id);
+      setSelectedPoint(
+        currentCanvas.points[0] ? currentCanvas.points[0].id : ""
+      );
     }
   }, [selectedPoint, setSelectedPoint, currentCanvas]);
   // console.log(currentCanvas.points, selectedPoint);

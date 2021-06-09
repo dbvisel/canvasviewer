@@ -40,8 +40,8 @@ const CanvasMode = ({
 
   return (
     <CanvasModeWrapper key={currentCanvas.id} id="canvasmode">
-      <nav>
-        {selectedPoint ? (
+      {selectedPoint ? (
+        <nav>
           <SelectedPoint
             currentCanvas={currentCanvas}
             point={
@@ -50,7 +50,7 @@ const CanvasMode = ({
             setSelectedPoint={setSelectedPoint}
             setPresentationMode={setPresentationMode}
           />
-        ) : myStartPoints ? (
+          ) : myStartPoints ? (
           <div>
             <h2>Go to start:</h2>
             {myStartPoints.map((startpoint, index) => (
@@ -69,8 +69,8 @@ const CanvasMode = ({
               </button>
             ))}
           </div>
-        ) : null}
-      </nav>
+        </nav>
+      ) : null}
       <DndProvider backend={HTML5Backend}>
         <main
           ref={canvas}
