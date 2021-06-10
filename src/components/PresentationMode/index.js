@@ -12,6 +12,8 @@ import {
 import SelectedPoint from "./../SelectedPoint";
 import { PresentationModeDiv, PresentationPointWrapper } from "./elements";
 
+// TODO: if there is no spine, maybe just show points at random?
+
 const PresentationPoint = ({ pointData, canvasId }) => {
   const myCommentId = canvasId + "-" + pointData.id;
 

@@ -17,6 +17,7 @@ export const CanvasEmbed = ({
   text,
   src,
   presentationMode,
+  noPreview,
   width = Config.defaultSizes.canvas.width,
   height = Config.defaultSizes.canvas.height,
 }) => (
@@ -38,6 +39,7 @@ CanvasEmbed.propTypes = {
   text: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };
@@ -48,11 +50,12 @@ export const BookEmbed = ({
   width = Config.defaultSizes.book.width,
   height = Config.defaultSizes.book.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
     <BookEmbedWrapper presentationMode={presentationMode} minWidth={width}>
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -83,6 +86,7 @@ BookEmbed.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };
@@ -105,6 +109,7 @@ export const CommentPoint = ({
 CommentPoint.propTypes = {
   text: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   isStartPoint: PropTypes.bool,
   isStopPoint: PropTypes.bool,
 };
@@ -115,11 +120,12 @@ export const AudioEmbed = ({
   width = Config.defaultSizes.audio.width,
   height = Config.defaultSizes.audio.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
     <AudioEmbedWrapper presentationMode={presentationMode}>
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -152,11 +158,12 @@ export const ImageEmbed = ({
   width = Config.defaultSizes.image.width,
   height = Config.defaultSizes.image.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
     <ImageEmbedWrapper presentationMode={presentationMode}>
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -187,6 +194,7 @@ ImageEmbed.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };
@@ -197,11 +205,12 @@ export const WebEmbed = ({
   width = Config.defaultSizes.web.width,
   height = Config.defaultSizes.web.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
     <WebEmbedWrapper presentationMode={presentationMode} wrapperWidth={width}>
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -232,6 +241,7 @@ WebEmbed.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };
@@ -242,6 +252,7 @@ export const VideoEmbed = ({
   width = Config.defaultSizes.video.width,
   height = Config.defaultSizes.video.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
@@ -250,7 +261,7 @@ export const VideoEmbed = ({
       minHeight={height}
       minWidth={width}
     >
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -281,6 +292,7 @@ VideoEmbed.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };
@@ -291,6 +303,7 @@ export const SoftwareEmbed = ({
   width = Config.defaultSizes.software.width,
   height = Config.defaultSizes.software.height,
   presentationMode,
+  noPreview,
 }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
@@ -299,7 +312,7 @@ export const SoftwareEmbed = ({
       width={width}
       height={height}
     >
-      {presentationMode || loaded ? (
+      {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
           width={presentationMode ? "100%" : width}
@@ -330,6 +343,7 @@ SoftwareEmbed.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
+  noPreview: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
 };

@@ -69,7 +69,8 @@ const SelectedPoint = ({
           </strong>{" "}
           {point.text || ""}
         </p>
-        {point.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
+        {(point.sideTrips && point.sideTrips.length) ||
+        (previousSideTrips && usePreviousSideTrips) ? (
           <div className="sidetrips">
             <h4>Side trips:</h4>
             {previousSideTrips && usePreviousSideTrips
@@ -148,7 +149,8 @@ const SelectedPoint = ({
           ) : null}
         </div>
       ) : null}
-      {point.sideTrips || (previousSideTrips && usePreviousSideTrips) ? (
+      {(point.sideTrips && point.sideTrips.length) ||
+      (previousSideTrips && usePreviousSideTrips) ? (
         <div className="sidetrips">
           <hr />
           <h4>Side trips:</h4>

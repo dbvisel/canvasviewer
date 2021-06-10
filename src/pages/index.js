@@ -18,6 +18,13 @@ const Index = () => {
           </li>
         ))}
       </ul>
+      <p>
+        Or, try{" "}
+        <strong>
+          <Link to={`/editor`}>editing a canvas</Link>
+        </strong>
+        .
+      </p>
     </div>
   );
 };

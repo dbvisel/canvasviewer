@@ -6,6 +6,8 @@ import { BiCommentAdd } from "react-icons/bi";
 import { HeaderDiv } from "./elements";
 import Config from "./../../config";
 
+// TODO: add option to download JSON for current canvas here.
+
 const Header = ({
   currentCanvas,
   mode,

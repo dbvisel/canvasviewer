@@ -48,7 +48,6 @@ const Point = ({
   // if (isDragging) {
   //   console.log("dragging!", pointData);
   // }
-
   return (
     <PointWrapper
       id={pointData.id}
@@ -79,6 +78,7 @@ const Point = ({
           src={pointData.url}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "canvas" ? (
         <CanvasEmbed
@@ -88,6 +88,7 @@ const Point = ({
           height={pointData.height}
           title={pointData.title}
           text={pointData.text}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "audio" ? (
         <AudioEmbed
@@ -95,6 +96,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "book" ? (
         <BookEmbed
@@ -102,6 +104,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "image" ? (
         <ImageEmbed
@@ -109,6 +112,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "web" ? (
         <WebEmbed
@@ -116,6 +120,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "comment" ? (
         <CommentPoint
@@ -123,6 +128,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : pointData.type && pointData.type === "software" ? (
         <SoftwareEmbed
@@ -130,6 +136,7 @@ const Point = ({
           id={myCommentId}
           width={pointData.width}
           height={pointData.height}
+          noPreview={pointData.noPreview}
         />
       ) : (
         <div>{JSON.stringify(pointData)}</div>

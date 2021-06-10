@@ -50,25 +50,26 @@ const CanvasMode = ({
             setSelectedPoint={setSelectedPoint}
             setPresentationMode={setPresentationMode}
           />
-          ) : myStartPoints ? (
-          <div>
-            <h2>Go to start:</h2>
-            {myStartPoints.map((startpoint, index) => (
-              <button
-                key={`startpoint_${index}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedPoint(startpoint.id);
-                }}
-              >
-                {startpoint.title
-                  ? startpoint.title
-                  : myStartPoints.length > 1
-                  ? `Start point ${index + 1}`
-                  : "Start point"}
-              </button>
-            ))}
-          </div>
+          {myStartPoints && myStartPoints.length ? (
+            <div>
+              <h2>Go to start:</h2>
+              {myStartPoints.map((startpoint, index) => (
+                <button
+                  key={`startpoint_${index}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPoint(startpoint.id);
+                  }}
+                >
+                  {startpoint.title
+                    ? startpoint.title
+                    : myStartPoints.length > 1
+                    ? `Start point ${index + 1}`
+                    : "Start point"}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </nav>
       ) : null}
       <DndProvider backend={HTML5Backend}>

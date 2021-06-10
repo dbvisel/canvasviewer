@@ -146,6 +146,7 @@ const Canvas = ({
   };
 
   const getMyParentPoint = (point) => {
+    // TODO: This crashes if there's no spine!
     for (let i = 0; i < boxes.length; i++) {
       if (boxes[i].sideTrips && boxes[i].sideTrips.length) {
         if (boxes[i].sideTrips.indexOf(point.id) > -1) {
@@ -159,6 +160,7 @@ const Canvas = ({
   const getPointFromId = (id) => boxes.filter((x) => x.id === id)[0];
 
   const getMySpinePoint = (point) => {
+    // TODO: This fails if there's no spine!
     // console.log("Getting spine point for", point.id);
     if (thisPointIsMainSpine(point)) {
       return point;
@@ -225,23 +227,37 @@ const Canvas = ({
               ) : null}
               {point.sideTrips && point.sideTrips.length
                 ? point.sideTrips.map((sideTrip, index) => {
-                    const thisSideTrip = getNextPoint(sideTrip);
-                    // TODO: check whether to draw the line
-                    const drawLine =
-                      (thisPointIsMainSpine(point) ||
-                        getMySpinePoint(point).id === currentSpinePoint) &&
-                      (thisPointIsMainSpine(thisSideTrip) ||
-                        getMySpinePoint(point).id === currentSpinePoint);
-
-                    return drawLine ? (
-                      <ThinLine
-                        key={index}
-                        x1={x}
-                        y1={y}
-                        x2={getCenter(thisSideTrip).x}
-                        y2={getCenter(thisSideTrip).y}
-                      />
-                    ) : null;
+                    if (hasSpine) {
+                      const thisSideTrip = getNextPoint(sideTrip);
+                      // check whether to draw the line
+                      const drawLine =
+                        (thisPointIsMainSpine(point) ||
+                          getMySpinePoint(point).id === currentSpinePoint) &&
+                        (thisPointIsMainSpine(thisSideTrip) ||
+                          getMySpinePoint(point).id === currentSpinePoint);
+                      // TODO: are we doubling lines? Maybe check?
+                      return drawLine ? (
+                        <ThinLine
+                          key={index}
+                          x1={x}
+                          y1={y}
+                          x2={getCenter(thisSideTrip).x}
+                          y2={getCenter(thisSideTrip).y}
+                        />
+                      ) : null;
+                    } else {
+                      // there is no spine, just draw the line
+                      const thisSideTrip = getNextPoint(sideTrip);
+                      return (
+                        <ThinLine
+                          key={index}
+                          x1={x}
+                          y1={y}
+                          x2={getCenter(thisSideTrip).x}
+                          y2={getCenter(thisSideTrip).y}
+                        />
+                      );
+                    }
                   })
                 : null}
             </React.Fragment>
