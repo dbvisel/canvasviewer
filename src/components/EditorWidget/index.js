@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { EditorWidgetDiv } from "./elements";
 
 const EditorWidget = ({ mode, selectedPoint, points, setPoints }) => {
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [counter, setCounter] = React.useState(0);
   const [title, setTitle] = React.useState(
     selectedPoint !== null ? selectedPoint.title : ""
@@ -27,19 +28,25 @@ const EditorWidget = ({ mode, selectedPoint, points, setPoints }) => {
 
   const addPoint = (e) => {
     e.preventDefault();
-    const thePoint = {
-      id: `edited_${points.length}`,
-      noPreview: true, // this is to tell it not to try to get an image for it.
-      title: title,
-      text: text,
-      type: type,
-      nextPoint: nextPoint,
-      sideTrips: sideTrips,
-      url: url,
-    };
-    const newPoints = points;
-    newPoints[points.length] = thePoint;
-    setPoints(newPoints);
+    if (url || type === "comment") {
+      console.log(`|${url}|`);
+      const thePoint = {
+        id: `edited_${points.length}`,
+        noPreview: true, // this is to tell it not to try to get an image for it.
+        title: title,
+        text: text,
+        type: type,
+        nextPoint: nextPoint,
+        sideTrips: sideTrips,
+        url: url,
+      };
+      const newPoints = points;
+      newPoints[points.length] = thePoint;
+      setPoints(newPoints);
+      setErrorMessage("");
+    } else {
+      setErrorMessage("You need to enter a URL!");
+    }
   };
 
   const editPoint = (e) => {
@@ -165,52 +172,69 @@ const EditorWidget = ({ mode, selectedPoint, points, setPoints }) => {
             />
           </label>
         ) : null}
-        <label htmlFor="nextPoint">
-          Next point:
-          <select
-            name="nextPoint"
-            id="nextPoint"
-            value={nextPoint}
-            onChange={(e) => {
-              setNextPoint(e.target.value);
-            }}
-          >
-            <option value="">(none)</option>
-            {points.map((x, index) =>
-              !selectedPoint || x.id !== selectedPoint.id ? (
-                <option key={index} value={x.id}>
-                  {x.title || `Point ${index + 1}`}
-                </option>
-              ) : null
-            )}
-          </select>
-        </label>
-        <label htmlFor="sideTrips">
-          Side trips:
-          <select
-            name="sideTrips"
-            id="sideTrips"
-            value={sideTrips}
-            onChange={(e) => {
-              const selected = [];
-              for (let i = 0; i < e.target.options.length; i++) {
-                if (e.target.options[i].selected) {
-                  selected.push(e.target.options[i].value);
+        {points.length ? (
+          <label htmlFor="nextPoint">
+            Next point:
+            <select
+              name="nextPoint"
+              id="nextPoint"
+              value={nextPoint}
+              onChange={(e) => {
+                setNextPoint(e.target.value);
+              }}
+            >
+              <option value="">(none)</option>
+              {points.map((x, index) =>
+                !selectedPoint || x.id !== selectedPoint.id ? (
+                  <option key={index} value={x.id}>
+                    {x.title || `Point ${index + 1}`}
+                  </option>
+                ) : null
+              )}
+            </select>
+          </label>
+        ) : null}
+        {points.length ? (
+          <label htmlFor="sideTrips">
+            Side trips:
+            <select
+              name="sideTrips"
+              id="sideTrips"
+              value={sideTrips}
+              onChange={(e) => {
+                const selected = [];
+                for (let i = 0; i < e.target.options.length; i++) {
+                  if (e.target.options[i].selected) {
+                    selected.push(e.target.options[i].value);
+                  }
                 }
-              }
-              setSideTrips(selected);
-            }}
-            multiple
-          >
-            {points.map((x, index) =>
-              !selectedPoint || x.id !== selectedPoint.id ? (
-                <option key={index} value={x.id}>
-                  {x.title || `Point ${index + 1}`}
-                </option>
-              ) : null
-            )}
-          </select>
-        </label>
+                setSideTrips(selected);
+              }}
+              multiple
+            >
+              {points.map((x, index) =>
+                !selectedPoint || x.id !== selectedPoint.id ? (
+                  <option key={index} value={x.id}>
+                    {x.title || `Point ${index + 1}`}
+                  </option>
+                ) : null
+              )}
+            </select>
+          </label>
+        ) : null}
+        {errorMessage ? (
+          <p>
+            <a
+              href="/#"
+              onClick={(e) => {
+                e.preventDefault();
+                setErrorMessage("");
+              }}
+            >
+              {errorMessage}
+            </a>
+          </p>
+        ) : null}
         <p>
           {selectedPoint === null ? (
             <button onClick={addPoint}>Add!</button>
