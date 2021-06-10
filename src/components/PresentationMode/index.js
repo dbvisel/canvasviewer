@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import {
   VideoEmbed,
   AudioEmbed,
@@ -94,6 +95,11 @@ const PresentationPoint = ({ pointData, canvasId }) => {
   );
 };
 
+PresentationPoint.propTypes = {
+  pointData: PropTypes.object,
+  canvasId: PropTypes.string,
+};
+
 const PresentationMode = ({
   currentCanvas,
   selectedPoint,
@@ -133,3 +139,9 @@ const PresentationMode = ({
 };
 
 export default PresentationMode;
+
+PresentationMode.propTypes = {
+  currentCanvas: PropTypes.object,
+  selectedPoint: PropTypes.string,
+  setSelectedPoint: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import Graph from "react-graph-vis";
 import SelectedPoint from "./../SelectedPoint";
 import { GraphModeDiv } from "./elements";
@@ -72,7 +73,7 @@ const GraphMode = ({
     },
   };
   // console.log(currentCanvas, graph, graphElement.current);
-  console.log(selectedPoint);
+  // console.log(selectedPoint);
   return (
     <GraphModeDiv>
       {graph !== null ? (
@@ -103,3 +104,10 @@ const GraphMode = ({
 };
 
 export default GraphMode;
+
+GraphMode.propTypes = {
+  currentCanvas: PropTypes.object,
+  selectedPoint: PropTypes.string,
+  setSelectedPoint: PropTypes.func,
+  setPresentationMode: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { DiscussionEmbed } from "disqus-react";
 import { AiOutlineClose } from "react-icons/ai";
 import { AnnotationWrapper } from "./elements";
@@ -36,3 +37,10 @@ const AnnotationPopUp = ({ id, annotationTitle, visible, closeAnnotation }) => {
 };
 
 export default AnnotationPopUp;
+
+AnnotationPopUp.propTypes = {
+  id: PropTypes.string,
+  annotationTitle: PropTypes.string,
+  visible: PropTypes.bool,
+  closeAnnotation: PropTypes.func,
+};

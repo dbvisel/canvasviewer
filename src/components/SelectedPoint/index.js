@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { SelectedPointDiv } from "./elements";
 
 const usePreviousSideTrips = false;
@@ -197,3 +198,11 @@ const SelectedPoint = ({
 };
 
 export default SelectedPoint;
+
+SelectedPoint.propTypes = {
+  point: PropTypes.object,
+  setSelectedPoint: PropTypes.func,
+  setPresentationMode: PropTypes.func,
+  currentCanvas: PropTypes.object,
+  isBottom: PropTypes.bool,
+};

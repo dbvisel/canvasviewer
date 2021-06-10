@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { BiCommentAdd } from "react-icons/bi";
 import { FiMaximize2 } from "react-icons/fi";
@@ -171,3 +172,14 @@ const Point = ({
 };
 
 export default Point;
+
+Point.propTypes = {
+  index: PropTypes.number,
+  pointData: PropTypes.object,
+  selectedPoint: PropTypes.string,
+  selectThis: PropTypes.func,
+  showAnnotation: PropTypes.func,
+  canvasId: PropTypes.string,
+  setPresentationMode: PropTypes.func,
+  useAnnotation: PropTypes.bool,
+};

@@ -32,6 +32,7 @@
  * top:						number, distance in pixels from top
  * 								If left or top are not set, a value wll be created (this is not very smart right now)
  * text:					string, comment on a point
+ * noPreview:			boolean, if this is true it doesn't look for a preview image (should test this automatically!)
  *
  * Web embed URLs aren't being broken down – so if you want a 1-up book, use this:
  *
