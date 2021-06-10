@@ -6,8 +6,6 @@ import { BiCommentAdd } from "react-icons/bi";
 import { HeaderDiv } from "./elements";
 import Config from "./../../config";
 
-// TODO: add option to download JSON for current canvas here.
-
 const Header = ({
   currentCanvas,
   mode,
@@ -48,6 +46,16 @@ const Header = ({
             </CommentCount>
           </a>
         ) : null}
+        <a
+          className="download"
+          href={`data:application/json,${JSON.stringify(currentCanvas)}`}
+          download={`${currentCanvas.id}.json`}
+          // onClick={(e) => {
+          //   e.preventDefault();
+          // }}
+        >
+          Download JSON
+        </a>
       </h1>
       <p>
         Choose mode:{" "}

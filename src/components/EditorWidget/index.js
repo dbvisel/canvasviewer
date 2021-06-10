@@ -106,7 +106,7 @@ const EditorWidget = ({ mode, selectedPoint, points, setPoints }) => {
 
   return mode === "canvas" ? (
     <EditorWidgetDiv key={`widget_${counter}`}>
-      <h2>{selectedPoint === null ? "Add a new element:" : `Edit ${title}`}</h2>
+      <h2>{selectedPoint === null ? "Add a new point:" : `Edit ${title}`}</h2>
       <form ref={thisForm}>
         <label htmlFor="title">
           Title:
@@ -127,6 +127,7 @@ const EditorWidget = ({ mode, selectedPoint, points, setPoints }) => {
             name="text"
             type="text"
             id="text"
+            placeholder="Add caption text if you want."
             value={text}
             onChange={(e) => {
               setText(e.target.value);

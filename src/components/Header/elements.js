@@ -22,6 +22,17 @@ export const HeaderDiv = styled.header`
       font-size: 24px;
       display: inline-flex;
       align-items: center;
+      &.download {
+        align-items: baseline;
+        font-size: 18px;
+        position: relative;
+        top: 4px;
+        margin: 0 20px;
+        &:after {
+          margin-left: 4px;
+          content: " ↓";
+        }
+      }
       & > svg + span {
         margin-left: 8px;
       }
