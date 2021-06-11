@@ -1,12 +1,12 @@
-# canvas collage demo
+# Canvas viewer demo
 
-Demo done in React to demonstrate how a JSON data format could be used to present "canvases" of embedded items/sections of items from the Internet Archive, interleaved, if desired, with comments. This is done in React because that was an easy way to get a demo off the ground; it could be made in anything.
+Demo done in React to demonstrate how a JSON data format could be used to present "canvases" of embedded items/sections of items from the Internet Archive, interleaved, if desired, with comments. This is done in React because that was an easy way to get a demo off the ground; it could be made in anything. The framework being used here is Gatsby, which is only here because it lets me easily make pages for each canvas. There's nothing essential about that.
 
-This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://canvasviewer.netlify.app.
+This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases based on what's in that data – that includes some basic documentation of the format. A demo deployment of this can be seen at https://canvasviewer.netlify.app. If you use the editor, you can download JSON that could be inserted into `canvasData.js` as a new canvas.
 
 To run this locally, _npm install_, then _npm start_. Build with _npm run build_.
 
-Still images are generated with a build step: _npm run make-images_, which screenshots all the images and puts them in _/static/images_.
+Still images are generated with a build script: _npm run make-images_, which screenshots all the embedded sites and puts them in _/static/images_. That needs some tweaking because it doesn't always make useful screenshots.
 
 ## Issues
 
