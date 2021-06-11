@@ -1,3 +1,5 @@
+// this does not play well with Gatsby. Change this to use require?
+
 import canvasData from "./src/assets/canvasData.js";
 import Config from "./src/config.js";
 import captureWebsite from "capture-website";

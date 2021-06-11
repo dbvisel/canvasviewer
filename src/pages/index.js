@@ -23,7 +23,8 @@ const Index = () => {
         <strong>
           <Link to={`/editor`}>editing a canvas</Link>
         </strong>
-        .
+        . Edited canvases aren’t saved, but you can download the JSON and add it
+        to <em>canvasData.js</em>, which makes the above list.
       </p>
     </div>
   );

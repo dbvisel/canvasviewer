@@ -6,7 +6,7 @@ This uses the JSON data stored in `/src/assets/canvasData.js` to build canvases 
 
 To run this locally, _npm install_, then _npm start_. Build with _npm run build_.
 
-Still images are generated with a build step: _npm run make-images_, which screenshots all the images and puts them in _/public/images_.
+Still images are generated with a build step: _npm run make-images_, which screenshots all the images and puts them in _/static/images_.
 
 ## Issues
 
@@ -23,12 +23,12 @@ Still images are generated with a build step: _npm run make-images_, which scree
    - image carousel? Is that essential?
  - phone presentation mode
    - force presentation mode on vw < 767px?
- - next/prev points probably need names (for multiple previous/next points) 
-   - need to deal with this in graph mode!
+ - editor could save what you've done in localstorage?
 
 ## Todo/Features to consider:
 
- - link to a particular point
+ - link to a particular point inside of content
+   - this is done through URL so far, but could be more granular/part of JSON
  - when a point is selected, auto-center the canvas?
    - this is kind of being done, but not very effectively
  - arrow keys for moving through present mode
