@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: "canvas viewer",
-    description: "canvas viewer demo",
+    title: "Canvas Viewer",
+    description: "Canvas viewer demo",
     author: "Dan Visel <dbvisel@gmail.com>",
   },
   flags: { PRESERVE_WEBPACK_CACHE: true },
@@ -21,7 +21,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `canvas viewer`,
+        name: `Canvas Viewer`,
         short_name: `canvasviewer`,
         start_url: `/`,
         background_color: `#663399`,

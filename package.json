@@ -45,9 +45,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbvisel/canvasdemo"
+    "url": "https://github.com/dbvisel/canvasviewer"
   },
   "bugs": {
-    "url": "https://github.com/dbvisel/canvasdemo"
+    "url": "https://github.com/dbvisel/canvasviewer/issues"
   }
 }
