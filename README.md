@@ -24,9 +24,12 @@ Still images are generated with a build script: _npm run make-images_, which scr
  - phone presentation mode
    - force presentation mode on vw < 767px?
  - editor could save what you've done in localstorage?
+ - presentation mode annotation doesn't have a way to get back
 
 ## Todo/Features to consider:
 
+ - for canvases without a spine, maybe presentation mode should just show random points?
+ - presentation mode could maybe have unique URLs for each slide?
  - link to a particular point inside of content
    - this is done through URL so far, but could be more granular/part of JSON
  - when a point is selected, auto-center the canvas?
