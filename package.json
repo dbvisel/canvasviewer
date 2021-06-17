@@ -5,6 +5,7 @@
   "description": "second version of canvas viewer",
   "version": "0.1.0",
   "dependencies": {
+    "@react-hook/resize-observer": "^1.2.0",
     "disqus-react": "^1.0.11",
     "gatsby": "^3.6.2",
     "gatsby-plugin-gatsby-cloud": "^2.6.1",

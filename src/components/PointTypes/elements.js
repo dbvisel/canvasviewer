@@ -31,16 +31,13 @@ export const CanvasEmbedDiv = styled.div`
 export const BookEmbedWrapper = styled.div`
   background: url(${oval}) center center no-repeat;
   background-size: contain;
-  ${(props) =>
-    !props.presentationMode &&
-    props.minWidth &&
-    "width: " + props.minWidth + "px;"}
-  ${(props) => props.presentationMode && "min-height: 100%;"}
-  ${(props) => props.presentationMode && "height: 100%;"}
+  min-height: ${(props) =>
+    props.presentationMode ? "100%" : "var(--myHeight)"};
+  height: ${(props) => (props.presentationMode ? "100%" : "var(--myHeight)")};
   ${(props) => props.presentationMode && "width: 100%;"}
   & iframe {
-    ${(props) => props.presentationMode && "min-height: 100%;"}
-    ${(props) => props.presentationMode && "height: 100%;"}
+    min-height: 100%;
+    height: 100%;
   }
   & > img {
     max-width: 100%;
@@ -55,7 +52,8 @@ export const CommentPointDiv = styled.div`
   border-radius: 4px;
   border: 2px solid var(--pointColor);
   background-color: var(--backgroundColor);
-  max-width: 250px;
+  min-width: 150px;
+  height: 100%;
   border-color: ${(props) =>
     props.isStartPoint
       ? "green"
@@ -63,6 +61,7 @@ export const CommentPointDiv = styled.div`
       ? "red"
       : "var(--pointColor)"};
   &.presentationmode {
+    min-width: initial;
     max-width: initial;
     width: 100%;
     height: 100%;
@@ -125,12 +124,9 @@ export const WebEmbedWrapper = styled.div`
 export const VideoEmbedWrapper = styled.div`
   background: url(${oval}) center center no-repeat;
   background-size: 200px 200px;
-  ${(props) =>
-    !props.presentationMode &&
-    props.minWidth &&
-    "width: " + props.minWidth + "px;"}
-  ${(props) => props.presentationMode && "min-height: 100%;"}
-  ${(props) => props.presentationMode && "height: 100%;"}
+  min-height: ${(props) =>
+    props.presentationMode ? "100%" : "var(--myHeight)"};
+  height: ${(props) => (props.presentationMode ? "100%" : "var(--myHeight)")};
   ${(props) => props.presentationMode && "width: 100%;"}
   & iframe, & img {
     ${(props) => props.presentationMode && "min-height: 100%;"}

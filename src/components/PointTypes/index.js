@@ -44,22 +44,15 @@ CanvasEmbed.propTypes = {
   height: PropTypes.number,
 };
 
-export const BookEmbed = ({
-  src,
-  id,
-  width = Config.defaultSizes.book.width,
-  height = Config.defaultSizes.book.height,
-  presentationMode,
-  noPreview,
-}) => {
+export const BookEmbed = ({ src, id, presentationMode, noPreview }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
-    <BookEmbedWrapper presentationMode={presentationMode} minWidth={width}>
+    <BookEmbedWrapper presentationMode={presentationMode} minWidth={"100%"}>
       {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
-          width={presentationMode ? "100%" : width}
-          height={presentationMode ? "100%" : height}
+          width={"100%"}
+          height={"100%"}
           frameBorder="0"
           webkitallowfullscreen="true"
           mozallowfullscreen="true"
@@ -70,8 +63,8 @@ export const BookEmbed = ({
         <img
           src={`images/${id}.png`}
           alt={src}
-          width={width}
-          height={height}
+          width={"100%"}
+          height={"100%"}
           onClick={(e) => {
             e.preventDefault();
             setLoaded(true);
@@ -87,8 +80,6 @@ BookEmbed.propTypes = {
   src: PropTypes.string,
   presentationMode: PropTypes.bool,
   noPreview: PropTypes.bool,
-  width: PropTypes.number,
-  height: PropTypes.number,
 };
 
 export const CommentPoint = ({
@@ -246,26 +237,19 @@ WebEmbed.propTypes = {
   height: PropTypes.number,
 };
 
-export const VideoEmbed = ({
-  src,
-  id,
-  width = Config.defaultSizes.video.width,
-  height = Config.defaultSizes.video.height,
-  presentationMode,
-  noPreview,
-}) => {
+export const VideoEmbed = ({ src, id, presentationMode, noPreview }) => {
   const [loaded, setLoaded] = React.useState(false);
   return (
     <VideoEmbedWrapper
       presentationMode={presentationMode}
-      minHeight={height}
-      minWidth={width}
+      minHeight={"100%"}
+      minWidth={"100%"}
     >
       {presentationMode || noPreview || loaded ? (
         <iframe
           src={src}
-          width={presentationMode ? "100%" : width}
-          height={presentationMode ? "100%" : height}
+          width={"100%"}
+          height={"100%"}
           frameBorder="0"
           webkitallowfullscreen="true"
           mozallowfullscreen="true"
@@ -276,8 +260,8 @@ export const VideoEmbed = ({
         <img
           src={`images/${id}.png`}
           alt={src}
-          width={width + "px"}
-          height={height + "px"}
+          width={"100%"}
+          height={"100%"}
           onClick={(e) => {
             e.preventDefault();
             setLoaded(true);

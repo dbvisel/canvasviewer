@@ -7,6 +7,7 @@ import { ThickLine, ThinLine } from "./elements";
 
 //TODO: If there's been dragging, we need to recalc line positions. Maybe that should be done in state?
 // TODO: need to show previous things that link to currently selected
+// TODO: add resize handler
 
 export const ItemTypes = { POINT: "point" };
 
@@ -58,7 +59,7 @@ const Canvas = ({
 
   React.useEffect(() => {
     if (!boxes.length) {
-      // console.log("Setting boxes!");
+      console.log("Setting boxes!");
       const newBoxes = [];
       for (let i = 0; i < points.length; i++) {
         newBoxes[i] = points[i];
@@ -79,6 +80,7 @@ const Canvas = ({
       const newBoxes = boxes;
       newBoxes[index].left = left;
       newBoxes[index].top = top;
+      console.log("About to set boxes!");
       setBoxes(newBoxes);
     },
     [boxes, setBoxes]
@@ -193,6 +195,12 @@ const Canvas = ({
                   key={point.id}
                   index={index}
                   pointData={point}
+                  setPointData={(newPoint) => {
+                    console.log(newPoint);
+                    const newBoxes = boxes;
+                    newBoxes[index] = newPoint;
+                    setBoxes(newBoxes);
+                  }}
                   selectedPoint={selectedPoint}
                   showAnnotation={showAnnotation}
                   setPresentationMode={setPresentationMode}
