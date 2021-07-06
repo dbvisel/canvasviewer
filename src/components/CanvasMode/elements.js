@@ -62,5 +62,15 @@ export const CanvasModeWrapper = styled.div`
       width: 100vw;
       height: 100vh;
     }
+    & > nav {
+      z-index: 999;
+      position: fixed;
+      right: 0;
+      top: 50px;
+      & > button {
+        font-weight: bold;
+        font-family: var(--bodyfont);
+      }
+    }
   }
 `;

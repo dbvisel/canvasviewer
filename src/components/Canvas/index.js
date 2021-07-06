@@ -47,6 +47,7 @@ const Canvas = ({
   setPresentationMode,
   useAnnotation,
   hasSpine,
+  scale,
 }) => {
   const [boxes, setBoxes] = React.useState([]);
   const [myWidth, setMyWidth] = React.useState("100%");
@@ -178,7 +179,16 @@ const Canvas = ({
       ref={innerCanvas}
       key={`flipflop${dragCount}`}
     >
-      <div ref={drop} style={{ width: "100%", height: "100%" }}>
+      <div
+        ref={drop}
+        style={{
+          width: "100%",
+          height: "100%",
+          transformOrigin: "top left",
+          transition: "0.5s",
+          transform: `scale(${scale})`,
+        }}
+      >
         {boxes.map((point, index) => {
           const { x, y } = getCenter(point);
           const nextPoint = point.nextPoint
@@ -286,4 +296,5 @@ Canvas.propTypes = {
   setPresentationMode: PropTypes.func,
   useAnnotation: PropTypes.bool,
   hasSpine: PropTypes.bool,
+  scale: PropTypes.number,
 };

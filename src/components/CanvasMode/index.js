@@ -16,6 +16,7 @@ const CanvasMode = ({
   hasSpine,
 }) => {
   const canvas = React.useRef();
+  const [currentScale, setCurrentScale] = React.useState(1);
   const myStartPoints = currentCanvas.points.filter((x) => x.isStartPoint);
 
   React.useEffect(() => {
@@ -90,7 +91,24 @@ const CanvasMode = ({
             setPresentationMode={setPresentationMode}
             useAnnotation={useAnnotation}
             hasSpine={hasSpine}
+            scale={currentScale}
           />
+          <nav>
+            <button
+              onClick={() => {
+                setCurrentScale(currentScale + 0.25);
+              }}
+            >
+              +
+            </button>
+            <button
+              onClick={() => {
+                setCurrentScale(currentScale - 0.25);
+              }}
+            >
+              –
+            </button>
+          </nav>
         </main>
       </DndProvider>
     </CanvasModeWrapper>
